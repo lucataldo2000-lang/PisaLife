@@ -1,14 +1,135 @@
 package Main;
 
+import Entity.Entity;
+import Entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Runnable{
+
+    Graphics2D g2;
+
+    public int tileSize = 32;
+    public boolean fullScreen = false;
+
+    public int currentLevel = 1;
+    public int screenCol = 16;
+    public int screenRow = 10;
+    public int screenWidth = screenCol * tileSize;
+    public int screenHeight = screenRow * tileSize;
+    public final int maxLevel = 3;
+
+    public int maxWorldCol = 20;
+    public int maxWorldRow = 20;
+
+    public Thread gameThread;
+
+    public final int fps = 30;
+
+    public int gameState;
+    public final int playState = 0;
+    public final int titleState = 1;
+    public final int deathState = 2;
+    public final int dialogueState = 3;
+
+    BufferedImage tempScreen;
+
+    TileManager tileManager = new TileManager(this);
+    public KeyHandler handler = new KeyHandler(this);
+    Player player = new Player(this);
 
     public GamePanel(){
+        this.setDoubleBuffered(true);
         this.setBackground(Color.black);
-        this.setPreferredSize(new Dimension(1920,1080));
-        this.setVisible(true);
+        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+        this.setFocusable(true);
+        this.addKeyListener(handler);
+    }
+
+    public void startThread(){
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    public void setUpGame(){
+        tempScreen = new BufferedImage(screenWidth, screenHeight,BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D)tempScreen.getGraphics();
+    }
+
+    @Override
+    public void run(){
+
+        double drawInterval = 1000000000 / fps;
+        long currentTime = System.nanoTime();
+        long lastTime;
+        double delta = 0;
+
+        while(gameThread != null){
+
+            lastTime = System.nanoTime();
+
+            delta += (lastTime - currentTime) / drawInterval;
+
+            currentTime = lastTime;
+
+            if(delta >= 1){
+
+                update();
+
+                draw();
+
+                drawScreen();
+
+                delta--;
+
+            }
+        }
+
+    }
+
+    public void update(){
+
+        if(gameThread != null){
+
+            player.update();
+
+            System.out.println(player.worldX + " " + player.worldY);
+
+        }
+
+    }
+
+    public void draw(){
+
+        g2.setColor(Color.black);
+        g2.fillRect(0,0, screenWidth,screenHeight);
+
+        if(gameThread != null){
+
+            tileManager.drawLevel(g2);
+
+            player.draw(g2);
+        }
+    }
+
+    public void drawScreen(){
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen,0,0,screenWidth,screenHeight,null);
+        g.dispose();
+    }
+
+    public void setFullScreen(){
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        gd.setFullScreenWindow(Main.window);
+
+        screenWidth = Main.window.getWidth();
+        screenHeight = Main.window.getHeight();
+
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
     }
 
 }
