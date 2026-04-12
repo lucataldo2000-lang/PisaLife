@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int titleState = 1;
     public final int deathState = 2;
     public final int dialogueState = 3;
+    public final int classChooserState = 4;
 
     BufferedImage tempScreen;
 

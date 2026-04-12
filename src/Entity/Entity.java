@@ -34,10 +34,15 @@ public class Entity {
     public final int shield = 2;
     public final int consumable = 3;
 
-    BufferedImage[] up = new BufferedImage[3];
-    BufferedImage[] down = new BufferedImage[3];
-    BufferedImage[] left = new BufferedImage[3];
-    BufferedImage[] right = new BufferedImage[3];
+    public int playerClass;
+    public final int warriorClass = 0;
+    public final int wizardClass = 1;
+    public final int rangerClass = 2;
+
+    BufferedImage[][] up = new BufferedImage[3][3];
+    BufferedImage[][] down = new BufferedImage[3][3];
+    BufferedImage[][] left = new BufferedImage[3][3];
+    BufferedImage[][] right = new BufferedImage[3][3];
 
     BufferedImage image,image2,image3;
 

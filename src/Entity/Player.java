@@ -43,10 +43,21 @@ public class Player extends Entity{
     public void getImages(){
         try{
 
-            up[0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior1.png"));
-            down[0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior0.png"));
-            left[0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior3.png"));
-            right[0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior2.png"));
+            up[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior1.png"));
+            down[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior0.png"));
+            left[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior3.png"));
+            right[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior2.png"));
+
+            up[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard1.png"));
+            down[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
+            left[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard2.png"));
+            right[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard3.png"));
+
+            up[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer1.png"));
+            down[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
+            left[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
+            right[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
+
 
         }catch(IOException e){e.printStackTrace();}
     }
@@ -124,10 +135,10 @@ public class Player extends Entity{
         int y = screenY;
 
         switch(direction){
-            case "up" -> image = up[0];
-            case "down" -> image = down[0];
-            case "left","up-left","down-left" -> image = left[0];
-            case "right","up-right","down-right" -> image = right[0];
+            case "up" -> image = up[playerClass][0];
+            case "down" -> image = down[playerClass][0];
+            case "left","up-left","down-left" -> image = left[playerClass][0];
+            case "right","up-right","down-right" -> image = right[playerClass][0];
         }
 
         g2.drawImage(image,x,y,gp.tileSize * 2,gp.tileSize * 2,null);

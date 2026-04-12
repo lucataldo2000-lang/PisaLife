@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     public int titleSelector;
+    public int classSelector;
     public boolean upPressed,downPressed,leftPressed,rightPressed;
     GamePanel gp;
 
@@ -43,10 +44,28 @@ public class KeyHandler implements KeyListener {
                 case KeyEvent.VK_DOWN -> {if(titleSelector + 1 == 4){titleSelector = 0;} else{titleSelector++;}}
                 case KeyEvent.VK_ENTER -> {
                     switch(titleSelector){
-                        case 0 -> gp.gameState = gp.playState;
+                        case 0 -> gp.gameState = gp.classChooserState;
                         case 3 -> System.exit(0);
                     }
                 }
+            }
+        }
+        if(gp.gameState == gp.classChooserState){
+            switch(code){
+                case KeyEvent.VK_A -> {if(classSelector - 1 == -1){classSelector = 2;} else{classSelector--;}}
+                case KeyEvent.VK_D -> {if(classSelector + 1 == 3){classSelector = 0;} else{classSelector++;}}
+                case KeyEvent.VK_LEFT -> {if(classSelector - 1 == -1){classSelector = 2;} else{classSelector--;}}
+                case KeyEvent.VK_RIGHT -> {if(classSelector + 1 == 3){classSelector = 0;} else{classSelector++;}}
+                /*case KeyEvent.VK_ENTER -> {
+                    gp.gameState = gp.playState;
+                    switch(classSelector){
+                        case 0 -> gp.player.playerClass = gp.player.warriorClass;
+                        case 1 -> gp.player.playerClass = gp.player.wizardClass;
+                        case 2 -> gp.player.playerClass = gp.player.rangerClass;
+                    }
+                }
+
+                 */
             }
         }
     }
