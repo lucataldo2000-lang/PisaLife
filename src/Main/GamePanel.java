@@ -38,7 +38,13 @@ public class GamePanel extends JPanel implements Runnable{
 
     TileManager tileManager = new TileManager(this);
     public KeyHandler handler = new KeyHandler(this);
-    Player player = new Player(this);
+    public Player player = new Player(this);
+    public Collision checker = new Collision(this);
+    Entity entity = new Entity(this);
+    Assets setter = new Assets(this);
+    GUI gui = new GUI(this);
+
+    public Entity[][] objects = new Entity[maxLevel][20];
 
     public GamePanel(){
         this.setDoubleBuffered(true);
@@ -54,6 +60,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setUpGame(){
+        gameState = titleState;
+        setter.setObj();
+
         tempScreen = new BufferedImage(screenWidth, screenHeight,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
     }
@@ -108,9 +117,22 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameThread != null){
 
-            tileManager.drawLevel(g2);
+            switch(gameState){
+                case 0 -> {
+                    tileManager.drawLevel(g2);
 
-            player.draw(g2);
+                    player.draw(g2);
+
+                    for(int i = 0; i < objects.length; i++){
+                        if(objects[currentLevel][i] != null){
+                            objects[currentLevel][i].draw(g2);
+                        }
+                    }
+                }
+            }
+
+            gui.draw(g2);
+
         }
     }
 

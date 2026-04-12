@@ -19,7 +19,9 @@ public class Player extends Entity{
         this.gp = gp;
 
         type = playerType;
-        solidArea = new Rectangle(20,20);
+        solidArea = new Rectangle(40,40);
+        solidArea.x = 12;
+        solidArea.y = 22;
 
         screenX = gp.screenWidth / 2;
         screenY = gp.screenHeight / 2;
@@ -34,8 +36,8 @@ public class Player extends Entity{
         speed = 4;
         direction = "down";
 
-        worldX = 0;
-        worldY = 0;
+        worldX = 100;
+        worldY = 100;
     }
 
     public void getImages(){
@@ -54,6 +56,10 @@ public class Player extends Entity{
         if(gp.gameThread != null && gp.gameState == gp.playState){
 
             if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
+
+                collisionOn = false;
+
+                gp.checker.checkTile(this);
 
                 if(gp.handler.upPressed){
                     direction = "up";
@@ -81,26 +87,28 @@ public class Player extends Entity{
                     direction = "down-left";
                 }
 
-                switch(direction){
-                    case "down" -> worldY += speed;
-                    case "up" -> worldY -= speed;
-                    case "left" ->  worldX -= speed;
-                    case "right" -> worldX += speed;
-                    case "down-left" -> {
-                        worldY += speed - 1;
-                        worldX -= speed - 1;
-                    }
-                    case "up-left" -> {
-                        worldY -= speed - 1;
-                        worldX -= speed - 1;
-                    }
-                    case "down-right" ->  {
-                        worldY += speed - 1;
-                        worldX += speed - 1;
-                    }
-                    case "up-right" -> {
-                        worldY -= speed - 1;
-                        worldX += speed - 1;
+                if(!collisionOn){
+                    switch(direction){
+                        case "down" -> worldY += speed;
+                        case "up" -> worldY -= speed;
+                        case "left" ->  worldX -= speed;
+                        case "right" -> worldX += speed;
+                        case "down-left" -> {
+                            worldY += speed - 1;
+                            worldX -= speed - 1;
+                        }
+                        case "up-left" -> {
+                            worldY -= speed - 1;
+                            worldX -= speed - 1;
+                        }
+                        case "down-right" ->  {
+                            worldY += speed - 1;
+                            worldX += speed - 1;
+                        }
+                        case "up-right" -> {
+                            worldY -= speed - 1;
+                            worldX += speed - 1;
+                        }
                     }
                 }
 
