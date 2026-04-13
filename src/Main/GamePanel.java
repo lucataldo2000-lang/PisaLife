@@ -35,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int dialogueState = 3;
     public final int classChooserState = 4;
 
+    public int waitTime;
+
     BufferedImage tempScreen;
 
     TileManager tileManager = new TileManager(this);
@@ -130,6 +132,7 @@ public class GamePanel extends JPanel implements Runnable{
                         }
                     }
                 }
+                case 4 -> waitTime++;
             }
 
             gui.draw(g2);

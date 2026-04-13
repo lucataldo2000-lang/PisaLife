@@ -56,16 +56,16 @@ public class KeyHandler implements KeyListener {
                 case KeyEvent.VK_D -> {if(classSelector + 1 == 3){classSelector = 0;} else{classSelector++;}}
                 case KeyEvent.VK_LEFT -> {if(classSelector - 1 == -1){classSelector = 2;} else{classSelector--;}}
                 case KeyEvent.VK_RIGHT -> {if(classSelector + 1 == 3){classSelector = 0;} else{classSelector++;}}
-                /*case KeyEvent.VK_ENTER -> {
-                    gp.gameState = gp.playState;
-                    switch(classSelector){
-                        case 0 -> gp.player.playerClass = gp.player.warriorClass;
-                        case 1 -> gp.player.playerClass = gp.player.wizardClass;
-                        case 2 -> gp.player.playerClass = gp.player.rangerClass;
+                case KeyEvent.VK_ENTER -> {
+                    if(gp.waitTime >= 30){
+                        gp.gameState = gp.playState;
+                        switch(classSelector){
+                            case 0 -> gp.player.playerClass = gp.player.warriorClass;
+                            case 1 -> gp.player.playerClass = gp.player.wizardClass;
+                            case 2 -> gp.player.playerClass = gp.player.rangerClass;
+                        }
                     }
                 }
-
-                 */
             }
         }
     }

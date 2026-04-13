@@ -27,6 +27,9 @@ public class Entity {
     public Rectangle solidArea;
     public boolean collisionOn = false;
 
+    public int solidAreaX;
+    public int solidAreaY;
+
     public int amount;
     public boolean stackable;
     public int objType;

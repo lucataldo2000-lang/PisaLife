@@ -65,4 +65,43 @@ public class Collision {
             }
         }
     }
+
+    public int checkObject(Entity player){
+
+        int objIndex = 999;
+
+        for(int i = 0; i < gp.objects.length; i++){
+
+           if(gp.objects[gp.currentLevel][i] != null){
+               player.solidArea.x = player.solidArea.x + player.worldX;
+               player.solidArea.y = player.solidArea.y + player.worldY;
+
+               System.out.println(gp.objects[gp.currentLevel][i].worldX);
+
+               gp.objects[gp.currentLevel][i].worldX = gp.objects[gp.currentLevel][i].worldX + gp.objects[gp.currentLevel][i].solidArea.x;
+               gp.objects[gp.currentLevel][i].worldY = gp.objects[gp.currentLevel][i].worldY + gp.objects[gp.currentLevel][i].solidArea.y;
+
+               switch (player.direction){
+                   case "up","up-left","up-right" -> player.solidArea.y -= player.speed;
+                   case "down","down-left","down-right" -> player.solidArea.y += player.speed;
+                   case "right" -> player.solidArea.x += player.speed;
+                   case "left" -> player.solidArea.x -= player.speed;
+               }
+
+               if(player.solidArea.intersects(gp.objects[gp.currentLevel][i].solidArea) && gp.objects[gp.currentLevel][i].collisionOn){
+                   objIndex = i;
+               }
+
+               player.solidArea.x = player.solidAreaX;
+               player.solidArea.y = player.solidAreaY;
+
+               gp.objects[gp.currentLevel][i].solidArea.x = gp.objects[gp.currentLevel][i].solidAreaX;
+               gp.objects[gp.currentLevel][i].solidArea.y = gp.objects[gp.currentLevel][i].solidAreaY;
+
+               System.out.println(gp.objects[gp.currentLevel][i].name);
+           }
+        }
+
+        return objIndex;
+    }
 }

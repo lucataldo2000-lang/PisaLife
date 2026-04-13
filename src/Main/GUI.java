@@ -8,15 +8,24 @@ import java.io.IOException;
 public class GUI {
 
     GamePanel gp;
-    BufferedImage image1,image2,image3;
+    BufferedImage image1,image2,image3,inventoryImage,slotImage;
 
     public GUI(GamePanel gp){
         this.gp = gp;
+
+        try{
+            image1 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior0.png"));
+            image2 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
+            image3 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
+            inventoryImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/inventory.png"));
+            slotImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/slot.png"));
+        }catch(IOException e){e.printStackTrace();}
     }
 
     public void draw(Graphics2D g2){
 
         switch(gp.gameState){
+            case 0 -> drawInventory(g2);
             case 1 -> drawTitle(g2);
             case 4 -> drawClassChooser(g2);
         }
@@ -65,16 +74,10 @@ public class GUI {
 
         g2.drawString("Choose a class", x,y);
 
-        try{
-            image1 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior0.png"));
-            image2 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
-            image3 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
-        }catch(IOException e){e.printStackTrace();}
-
         BufferedImage[] images = {image1,image2,image3};
 
-        y += 50;
-        x -= 50;
+        y = 115;
+        x = 50;
 
         for(BufferedImage img : images){
             g2.drawImage(img,x,y,gp.tileSize * 4,gp.tileSize * 4,null);
@@ -82,11 +85,26 @@ public class GUI {
             x += gp.tileSize * 4;
         }
 
+        switch(gp.handler.classSelector){
+            case 0 -> x = 100;
+            case 1 -> x = 240;
+            case 2 -> x = 360;
+        }
+
+        g2.drawString("v", x, y - 30);
+
+        switch(gp.handler.classSelector){
+            case 0 -> x = 50;
+            case 1 -> x = 185;
+            case 2 -> x = 310;
+        }
+
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(x,y - 7,115,150,10,10);
+
         x = 75;
 
-        g2.drawString("v",x + ((gp.tileSize * 5) * gp.handler.classSelector),y - 10);
-
-        y += gp.tileSize * 5;
+        y += gp.tileSize * 5 + gp.tileSize / 2;
 
         g2.setFont(new Font("Arial",Font.BOLD, 20));
 
@@ -99,6 +117,20 @@ public class GUI {
         x += gp.tileSize * 4;
 
         g2.drawString("Ranger",x,y);
+
+    }
+
+    public void drawInventory(Graphics2D g2){
+
+        int x = 15;
+        int y = gp.screenHeight - 65;
+
+        for(int i = 0; i < 2; i++){
+            g2.drawImage(slotImage,x,y,slotImage.getWidth(),slotImage.getHeight(),null);
+            x += slotImage.getWidth() + 5;
+        }
+
+        g2.drawImage(inventoryImage,x,y,slotImage.getWidth() * 3,slotImage.getHeight() + 2,null);
 
     }
 

@@ -13,6 +13,9 @@ public class Player extends Entity{
     public int screenX;
     public int screenY;
 
+    Entity[] inventory = new Entity[3];
+    public int objIndex;
+
     public Player(GamePanel gp){
         super(gp);
 
@@ -22,6 +25,9 @@ public class Player extends Entity{
         solidArea = new Rectangle(40,40);
         solidArea.x = 12;
         solidArea.y = 22;
+
+        solidAreaX = solidArea.x;
+        solidAreaY = solidArea.y;
 
         screenX = gp.screenWidth / 2;
         screenY = gp.screenHeight / 2;
@@ -37,7 +43,7 @@ public class Player extends Entity{
         direction = "down";
 
         worldX = 100;
-        worldY = 100;
+        worldY = 150;
     }
 
     public void getImages(){
@@ -50,8 +56,8 @@ public class Player extends Entity{
 
             up[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard1.png"));
             down[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
-            left[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard2.png"));
-            right[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard3.png"));
+            left[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard3.png"));
+            right[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard2.png"));
 
             up[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer1.png"));
             down[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
@@ -71,6 +77,7 @@ public class Player extends Entity{
                 collisionOn = false;
 
                 gp.checker.checkTile(this);
+                objIndex = gp.checker.checkObject(this);
 
                 if(gp.handler.upPressed){
                     direction = "up";
