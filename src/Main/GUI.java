@@ -8,7 +8,8 @@ import java.io.IOException;
 public class GUI {
 
     GamePanel gp;
-    BufferedImage image1,image2,image3,inventoryImage,slotImage;
+    BufferedImage image1,image2,image3,inventoryImage,slotImage,takeImage;
+    public boolean canTake;
 
     public GUI(GamePanel gp){
         this.gp = gp;
@@ -19,13 +20,17 @@ public class GUI {
             image3 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
             inventoryImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/inventory.png"));
             slotImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/slot.png"));
+            takeImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/takeObject.png"));
         }catch(IOException e){e.printStackTrace();}
     }
 
     public void draw(Graphics2D g2){
 
         switch(gp.gameState){
-            case 0 -> drawInventory(g2);
+            case 0 -> {
+                drawInventory(g2);
+                drawTakeObject(g2);
+            }
             case 1 -> drawTitle(g2);
             case 4 -> drawClassChooser(g2);
         }
@@ -149,6 +154,30 @@ public class GUI {
             }
         }
 
+    }
+
+    public void drawTakeObject(Graphics2D g2){
+
+        canTake = false;
+
+        for(int i = 0; i <  gp.objects[gp.currentLevel].length; i++){
+            if(gp.objects[gp.currentLevel][i] != null){
+
+
+                int x = gp.objects[gp.currentLevel][i].worldX - gp.player.worldX + gp.player.screenX;
+                int y = gp.objects[gp.currentLevel][i].worldY - gp.player.worldY + gp.player.screenY;
+
+                double distance = Math.sqrt(Math.pow((gp.objects[gp.currentLevel][i].worldX - gp.player.worldX - gp.player.solidArea.width / 2),2) + Math.pow(gp.objects[gp.currentLevel][i].worldY - gp.player.worldY - gp.player.solidArea.height / 2,2));
+
+                if(distance <= 40){
+                    canTake = true;
+                    g2.drawImage(takeImage,x, y - 20, takeImage.getWidth(), takeImage.getHeight(), null);
+
+                    System.out.println(canTake);
+                }
+
+            }
+        }
     }
 
 }

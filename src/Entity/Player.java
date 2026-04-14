@@ -76,11 +76,6 @@ public class Player extends Entity{
 
                 collisionOn = false;
 
-                gp.checker.checkTile(this);
-                objIndex = gp.checker.checkObject(this);
-
-                pickUpObject(objIndex);
-
                 if(gp.handler.upPressed){
                     direction = "up";
                 }
@@ -133,6 +128,11 @@ public class Player extends Entity{
                 }
 
             }
+
+            gp.checker.checkTile(this);
+            objIndex = gp.checker.checkObject(this);
+
+            pickUpObject(objIndex);
         }
     }
 
@@ -142,18 +142,22 @@ public class Player extends Entity{
 
             for(int i = 0; i < inventory.length; i++){
 
-               if(gp.objects[gp.currentLevel][i] != null){
-                   switch(gp.objects[gp.currentLevel][i].objType){
+                System.out.println(gp.handler.takePressed);
+
+               if(gp.objects[gp.currentLevel][index] != null && gp.handler.takePressed){
+                   gp.handler.takePressed = false;
+
+                   switch(gp.objects[gp.currentLevel][index].objType){
                        case 1 -> {
 
                            if(inventory[0] == null){
-                               inventory[0] = gp.objects[gp.currentLevel][i];
+                               inventory[0] = gp.objects[gp.currentLevel][index];
                                gp.objects[gp.currentLevel][index] = null;
                            }
                        }
                        case 2 -> {
                            if(inventory[1] == null){
-                               inventory[1] = gp.objects[gp.currentLevel][i];
+                               inventory[1] = gp.objects[gp.currentLevel][index];
                                gp.objects[gp.currentLevel][index] = null;
                            }
                        }
@@ -162,7 +166,7 @@ public class Player extends Entity{
                            for(int j = 2; j < inventory.length; j++){
 
                                if(inventory[j] == null){
-                                   inventory[j] = gp.objects[gp.currentLevel][i];
+                                   inventory[j] = gp.objects[gp.currentLevel][index];
 
                                    gp.objects[gp.currentLevel][index] = null;
 

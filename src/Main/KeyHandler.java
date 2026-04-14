@@ -7,7 +7,7 @@ public class KeyHandler implements KeyListener {
 
     public int titleSelector;
     public int classSelector;
-    public boolean upPressed,downPressed,leftPressed,rightPressed;
+    public boolean upPressed,downPressed,leftPressed,rightPressed,takePressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -26,6 +26,9 @@ public class KeyHandler implements KeyListener {
 
         if(gp.gameState == gp.playState){
             switch (code){
+                case KeyEvent.VK_E -> {if(gp.gui.canTake){
+                    takePressed = true;
+                }}
                 case KeyEvent.VK_W -> upPressed = true;
                 case KeyEvent.VK_S -> downPressed = true;
                 case KeyEvent.VK_D -> rightPressed = true;
