@@ -132,6 +132,23 @@ public class GUI {
 
         g2.drawImage(inventoryImage,x,y,slotImage.getWidth() * 3,slotImage.getHeight() + 2,null);
 
+        x = 23;
+        y = 263;
+
+        for(int i = 0; i < gp.player.inventory.length; i++){
+            if(gp.player.inventory[i] != null){
+
+                switch(i){
+                    case 1 -> x = 78;
+                    case 2 -> {x = 139; y = 265;}
+                    case 3 ->  {x = 183;y = 265;}
+                    case 4 -> {x = 228;y = 265;}
+                }
+
+                g2.drawImage(gp.player.inventory[i].image,x,y,gp.player.inventory[i].image.getWidth(),gp.player.inventory[i].image.getHeight(),null);
+            }
+        }
+
     }
 
 }

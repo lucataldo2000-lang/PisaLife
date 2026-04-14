@@ -70,16 +70,14 @@ public class Collision {
 
         int objIndex = 999;
 
-        for(int i = 0; i < gp.objects.length; i++){
+        for(int i = 0; i < gp.objects[gp.currentLevel].length; i++){
 
            if(gp.objects[gp.currentLevel][i] != null){
                player.solidArea.x = player.solidArea.x + player.worldX;
                player.solidArea.y = player.solidArea.y + player.worldY;
 
-               System.out.println(gp.objects[gp.currentLevel][i].worldX);
-
-               gp.objects[gp.currentLevel][i].worldX = gp.objects[gp.currentLevel][i].worldX + gp.objects[gp.currentLevel][i].solidArea.x;
-               gp.objects[gp.currentLevel][i].worldY = gp.objects[gp.currentLevel][i].worldY + gp.objects[gp.currentLevel][i].solidArea.y;
+               gp.objects[gp.currentLevel][i].solidArea.x = gp.objects[gp.currentLevel][i].worldX + gp.objects[gp.currentLevel][i].solidArea.x;
+               gp.objects[gp.currentLevel][i].solidArea.y = gp.objects[gp.currentLevel][i].worldY + gp.objects[gp.currentLevel][i].solidArea.y;
 
                switch (player.direction){
                    case "up","up-left","up-right" -> player.solidArea.y -= player.speed;
@@ -98,9 +96,9 @@ public class Collision {
                gp.objects[gp.currentLevel][i].solidArea.x = gp.objects[gp.currentLevel][i].solidAreaX;
                gp.objects[gp.currentLevel][i].solidArea.y = gp.objects[gp.currentLevel][i].solidAreaY;
 
-               System.out.println(gp.objects[gp.currentLevel][i].name);
            }
         }
+
 
         return objIndex;
     }

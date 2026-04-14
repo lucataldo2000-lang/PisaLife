@@ -47,7 +47,7 @@ public class Entity {
     BufferedImage[][] left = new BufferedImage[3][3];
     BufferedImage[][] right = new BufferedImage[3][3];
 
-    BufferedImage image,image2,image3;
+    public BufferedImage image,image2,image3;
 
     public Entity(GamePanel gp){
 

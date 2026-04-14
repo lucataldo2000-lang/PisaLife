@@ -107,8 +107,6 @@ public class GamePanel extends JPanel implements Runnable{
 
             player.update();
 
-            System.out.println(player.worldX + " " + player.worldY);
-
         }
 
     }
@@ -124,13 +122,13 @@ public class GamePanel extends JPanel implements Runnable{
                 case 0 -> {
                     tileManager.drawLevel(g2);
 
-                    player.draw(g2);
-
-                    for(int i = 0; i < objects.length; i++){
+                    for(int i = 0; i < objects[currentLevel].length; i++){
                         if(objects[currentLevel][i] != null){
                             objects[currentLevel][i].draw(g2);
                         }
                     }
+
+                    player.draw(g2);
                 }
                 case 4 -> waitTime++;
             }

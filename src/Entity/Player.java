@@ -13,7 +13,7 @@ public class Player extends Entity{
     public int screenX;
     public int screenY;
 
-    Entity[] inventory = new Entity[3];
+    public Entity[] inventory = new Entity[5];
     public int objIndex;
 
     public Player(GamePanel gp){
@@ -79,6 +79,8 @@ public class Player extends Entity{
                 gp.checker.checkTile(this);
                 objIndex = gp.checker.checkObject(this);
 
+                pickUpObject(objIndex);
+
                 if(gp.handler.upPressed){
                     direction = "up";
                 }
@@ -129,6 +131,48 @@ public class Player extends Entity{
                         }
                     }
                 }
+
+            }
+        }
+    }
+
+    public void pickUpObject(int index){
+
+        if(index != 999){
+
+            for(int i = 0; i < inventory.length; i++){
+
+               if(gp.objects[gp.currentLevel][i] != null){
+                   switch(gp.objects[gp.currentLevel][i].objType){
+                       case 1 -> {
+
+                           if(inventory[0] == null){
+                               inventory[0] = gp.objects[gp.currentLevel][i];
+                               gp.objects[gp.currentLevel][index] = null;
+                           }
+                       }
+                       case 2 -> {
+                           if(inventory[1] == null){
+                               inventory[1] = gp.objects[gp.currentLevel][i];
+                               gp.objects[gp.currentLevel][index] = null;
+                           }
+                       }
+                       case 3 -> {
+
+                           for(int j = 2; j < inventory.length; j++){
+
+                               if(inventory[j] == null){
+                                   inventory[j] = gp.objects[gp.currentLevel][i];
+
+                                   gp.objects[gp.currentLevel][index] = null;
+
+                                   return;
+                               }
+                           }
+                       }
+                   }
+
+               }
 
             }
         }
