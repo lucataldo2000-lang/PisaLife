@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable{
     Graphics2D g2;
 
     public int tileSize = 32;
-    public boolean fullScreen = false;
+    public boolean fullScreen = true;
 
     public int currentLevel = 1;
     public int screenCol = 16;
@@ -46,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable{
     Entity entity = new Entity(this);
     Assets setter = new Assets(this);
     GUI gui = new GUI(this);
+    public MouseHandler mouseHandler = new MouseHandler(this);
 
     public Entity[][] objects = new Entity[maxLevel][20];
 
@@ -55,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setFocusable(true);
         this.addKeyListener(handler);
+        this.addMouseWheelListener(mouseHandler);
     }
 
     public void startThread(){

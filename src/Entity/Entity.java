@@ -2,6 +2,7 @@ package Entity;
 
 import Main.GamePanel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -47,19 +48,87 @@ public class Entity {
     BufferedImage[][] left = new BufferedImage[3][3];
     BufferedImage[][] right = new BufferedImage[3][3];
 
-    public BufferedImage image,image2,image3;
+    public int spriteCounter;
+    public int spriteNum;
+
+    public BufferedImage[] objImage = new BufferedImage[5];
 
     public Entity(GamePanel gp){
 
         this.gp = gp;
     }
 
+    public Entity cloneObject(Entity entity){
+
+        Entity newObject = new Entity(gp);
+        newObject.name = entity.name;
+        newObject.direction = entity.direction;
+        newObject.type = entity.type;
+        newObject.objType = entity.objType;
+        newObject.collisionOn = entity.collisionOn;
+        newObject.solidArea = entity.solidArea;
+        newObject.solidArea.x = entity.solidArea.x;
+        newObject.solidArea.y = entity.solidArea.y;
+        newObject.solidAreaX = entity.solidAreaX;
+        newObject.solidAreaY = entity.solidAreaY;
+
+        for(int i = 0; i < objImage.length; i++){
+            newObject.objImage[i] = entity.objImage[i];
+        }
+
+        return newObject;
+    }
+
     public void draw(Graphics2D g2){
+
+        spriteCounter++;
+
+        BufferedImage drawImage = null;
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+        for(int i = 0; i < gp.objects[gp.currentLevel].length; i++){
+
+           if(gp.objects[gp.currentLevel][i] != null){
+
+               if(spriteCounter >= 2 && spriteNum < 5){
+                   spriteNum = 0;
+               }
+               if(spriteCounter >= 5 && spriteNum < 8){
+                   spriteNum = 1;
+               }
+               if(spriteCounter >= 8 && spriteNum < 11){
+                   spriteNum = 2;
+               }
+               if(spriteCounter >= 11 && spriteNum < 14){
+                   spriteNum = 3;
+               }
+               if(spriteCounter >= 14 && spriteNum < 17){
+                   spriteNum = 4;
+               }
+               if(spriteCounter >= 17 && spriteNum < 20){
+                   spriteNum = 3;
+               }
+               if(spriteCounter >= 20 && spriteNum < 23){
+                   spriteNum = 2;
+               }
+               if(spriteCounter >= 26 && spriteNum < 29){
+                   spriteNum = 1;
+               }
+               if(spriteCounter >= 29 && spriteNum < 32){
+                   spriteNum = 0;
+               }
+
+               if(spriteCounter >= 32){
+                   spriteCounter = 0;
+               }
+
+               drawImage = objImage[spriteNum];
+           }
+        }
+
+        g2.drawImage(drawImage,screenX,screenY,gp.tileSize,gp.tileSize,null);
     }
 
 

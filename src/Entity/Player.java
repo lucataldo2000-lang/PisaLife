@@ -76,6 +76,8 @@ public class Player extends Entity{
 
                 collisionOn = false;
 
+                gp.checker.checkTile(this);
+
                 if(gp.handler.upPressed){
                     direction = "up";
                 }
@@ -128,8 +130,10 @@ public class Player extends Entity{
                 }
 
             }
+            if(gp.handler.dropPressed){
+                dropObject();
+            }
 
-            gp.checker.checkTile(this);
             objIndex = gp.checker.checkObject(this);
 
             pickUpObject(objIndex);
@@ -141,8 +145,6 @@ public class Player extends Entity{
         if(index != 999){
 
             for(int i = 0; i < inventory.length; i++){
-
-                System.out.println(gp.handler.takePressed);
 
                if(gp.objects[gp.currentLevel][index] != null && gp.handler.takePressed){
                    gp.handler.takePressed = false;
@@ -179,6 +181,45 @@ public class Player extends Entity{
                }
 
             }
+        }
+    }
+
+    public void dropObject(){
+
+        gp.handler.dropPressed = false;
+
+        if(inventory[gp.handler.inventorySelector] != null){
+            for(int i = 0; i < gp.objects[gp.currentLevel].length;i++){
+
+                if(gp.objects[gp.currentLevel][i] == null){
+
+                    Entity newObject = cloneObject(inventory[gp.handler.inventorySelector]);
+                    gp.objects[gp.currentLevel][i] = newObject;
+
+                    switch(direction){
+                        case "up","up-left","up-right" -> {
+                            newObject.worldX = gp.player.worldX + gp.tileSize / 2;
+                            newObject.worldY = gp.player.worldY - gp.tileSize;
+                        }
+                        case "down","down-left","down-right" -> {
+                            newObject.worldX = gp.player.worldX + gp.tileSize / 2;
+                            newObject.worldY = gp.player.worldY + gp.tileSize * 2;
+                        }
+                        case "right" -> {
+                            newObject.worldX = gp.player.worldX + gp.tileSize * 2;
+                            newObject.worldY = gp.player.worldY + gp.tileSize / 2;
+                        }
+                        case "left" -> {
+                            newObject.worldX = gp.player.worldX - gp.tileSize;
+                            newObject.worldY = gp.player.worldY + gp.tileSize / 2;
+                        }
+                    }
+
+                    inventory[gp.handler.inventorySelector] = null;
+                    return;
+                }
+            }
+
         }
     }
 

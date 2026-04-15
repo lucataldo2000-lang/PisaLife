@@ -24,7 +24,9 @@ public class BasicSword extends Entity{
         solidAreaY = solidArea.y;
 
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/ObjectsTextures/BasicSword.png"));
+            for(int i = 0; i < objImage.length; i++){
+                objImage[i] = ImageIO.read(getClass().getResourceAsStream("/ObjectsTextures/BasicSword" + i + ".png"));
+            }
         }catch(IOException e){e.printStackTrace();}
     }
 }

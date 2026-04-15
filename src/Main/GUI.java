@@ -128,7 +128,7 @@ public class GUI {
     public void drawInventory(Graphics2D g2){
 
         int x = 15;
-        int y = gp.screenHeight - 65;
+        int y = 255;
 
         for(int i = 0; i < 2; i++){
             g2.drawImage(slotImage,x,y,slotImage.getWidth(),slotImage.getHeight(),null);
@@ -136,6 +136,20 @@ public class GUI {
         }
 
         g2.drawImage(inventoryImage,x,y,slotImage.getWidth() * 3,slotImage.getHeight() + 2,null);
+
+        y = 250;
+
+        switch (gp.handler.inventorySelector){
+            case 0 -> x = 34;
+            case 1 -> x = 89;
+            case 2 -> x = 150;
+            case 3 -> x = 195;
+            case 4 -> x = 240;
+        }
+
+        g2.setColor(Color.white);
+
+        g2.drawString("v", x,y);
 
         x = 23;
         y = 263;
@@ -150,7 +164,7 @@ public class GUI {
                     case 4 -> {x = 228;y = 265;}
                 }
 
-                g2.drawImage(gp.player.inventory[i].image,x,y,gp.player.inventory[i].image.getWidth(),gp.player.inventory[i].image.getHeight(),null);
+                g2.drawImage(gp.player.inventory[i].objImage[0],x,y,gp.player.inventory[i].objImage[0].getWidth(),gp.player.inventory[i].objImage[0].getHeight(),null);
             }
         }
 
@@ -173,7 +187,6 @@ public class GUI {
                     canTake = true;
                     g2.drawImage(takeImage,x, y - 20, takeImage.getWidth(), takeImage.getHeight(), null);
 
-                    System.out.println(canTake);
                 }
 
             }

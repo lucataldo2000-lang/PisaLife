@@ -7,7 +7,8 @@ public class KeyHandler implements KeyListener {
 
     public int titleSelector;
     public int classSelector;
-    public boolean upPressed,downPressed,leftPressed,rightPressed,takePressed;
+    public int inventorySelector;
+    public boolean upPressed,downPressed,leftPressed,rightPressed,takePressed,dropPressed;
     GamePanel gp;
 
     public KeyHandler(GamePanel gp){
@@ -37,6 +38,12 @@ public class KeyHandler implements KeyListener {
                 case KeyEvent.VK_DOWN -> downPressed = true;
                 case KeyEvent.VK_RIGHT -> rightPressed = true;
                 case KeyEvent.VK_LEFT -> leftPressed = true;
+                case KeyEvent.VK_1 -> inventorySelector = 0;
+                case KeyEvent.VK_2 -> inventorySelector = 1;
+                case KeyEvent.VK_3 -> inventorySelector = 2;
+                case KeyEvent.VK_4 -> inventorySelector = 3;
+                case KeyEvent.VK_5 -> inventorySelector = 4;
+                case KeyEvent.VK_Q -> dropPressed = true;
             }
         }
         if(gp.gameState == gp.titleState){

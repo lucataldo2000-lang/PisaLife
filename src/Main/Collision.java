@@ -29,9 +29,12 @@ public class Collision {
                 tileNum1 = gp.tileManager.tileNum[gp.currentLevel][leftTile][topTile];
                 tileNum2 = gp.tileManager.tileNum[gp.currentLevel][rightTile][topTile];
 
-                if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
-                    player.collisionOn = true;
+                if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
+                    if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
+                        player.collisionOn = true;
+                    }
                 }
+
             }
             case "down","down-left","down-right" -> {
 
@@ -39,9 +42,12 @@ public class Collision {
                 tileNum1 = gp.tileManager.tileNum[gp.currentLevel][leftTile][bottomTile];
                 tileNum2 = gp.tileManager.tileNum[gp.currentLevel][rightTile][bottomTile];
 
-                if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
-                    player.collisionOn = true;
+                if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
+                    if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
+                        player.collisionOn = true;
+                    }
                 }
+
             }
             case "right" -> {
 
@@ -49,9 +55,13 @@ public class Collision {
                 tileNum1 = gp.tileManager.tileNum[gp.currentLevel][rightTile][topTile];
                 tileNum2 = gp.tileManager.tileNum[gp.currentLevel][rightTile][bottomTile];
 
-                if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
-                    player.collisionOn = true;
+                if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
+
+                    if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
+                        player.collisionOn = true;
+                    }
                 }
+
             }
             case "left" -> {
 
@@ -59,9 +69,13 @@ public class Collision {
                 tileNum1 = gp.tileManager.tileNum[gp.currentLevel][leftTile][topTile];
                 tileNum2 = gp.tileManager.tileNum[gp.currentLevel][leftTile][bottomTile];
 
-                if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
-                    player.collisionOn = true;
+                if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
+
+                    if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
+                        player.collisionOn = true;
+                    }
                 }
+
             }
         }
     }
