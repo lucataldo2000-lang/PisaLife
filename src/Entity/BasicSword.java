@@ -15,7 +15,7 @@ public class BasicSword extends Entity{
         stackable = false;
         amount = 1;
         type = objectType;
-        objType = consumable;
+        objType = weapon;
         collisionOn = true;
         solidArea = new Rectangle(32,32);
         solidArea.x = 0;

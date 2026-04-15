@@ -175,7 +175,7 @@ public class GUI {
         canTake = false;
 
         for(int i = 0; i <  gp.objects[gp.currentLevel].length; i++){
-            if(gp.objects[gp.currentLevel][i] != null){
+            if(gp.objects[gp.currentLevel][i] != null && !gp.objects[gp.currentLevel][i].decoration){
 
 
                 int x = gp.objects[gp.currentLevel][i].worldX - gp.player.worldX + gp.player.screenX;

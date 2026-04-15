@@ -51,6 +51,8 @@ public class Entity {
     public int spriteCounter;
     public int spriteNum;
 
+    public boolean decoration;
+
     public BufferedImage[] objImage = new BufferedImage[5];
 
     public Entity(GamePanel gp){

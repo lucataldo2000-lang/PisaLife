@@ -86,7 +86,7 @@ public class Collision {
 
         for(int i = 0; i < gp.objects[gp.currentLevel].length; i++){
 
-           if(gp.objects[gp.currentLevel][i] != null){
+           if(gp.objects[gp.currentLevel][i] != null && !gp.objects[gp.currentLevel][i].decoration){
                player.solidArea.x = player.solidArea.x + player.worldX;
                player.solidArea.y = player.solidArea.y + player.worldY;
 
