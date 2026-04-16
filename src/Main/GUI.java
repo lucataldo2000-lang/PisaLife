@@ -158,7 +158,7 @@ public class GUI {
             if(gp.player.inventory[i] != null){
 
                 switch(i){
-                    case 1 -> x = 78;
+                    case 1 -> {x = 81; y = 265;}
                     case 2 -> {x = 139; y = 265;}
                     case 3 ->  {x = 183;y = 265;}
                     case 4 -> {x = 228;y = 265;}
@@ -174,14 +174,14 @@ public class GUI {
 
         canTake = false;
 
-        for(int i = 0; i <  gp.objects[gp.currentLevel].length; i++){
-            if(gp.objects[gp.currentLevel][i] != null && !gp.objects[gp.currentLevel][i].decoration){
+        for(int i = 0; i <  gp.objects[gp.currentLevel][gp.currentRoom].length; i++){
+            if(gp.objects[gp.currentLevel][gp.currentRoom][i] != null && !gp.objects[gp.currentLevel][gp.currentRoom][i].decoration){
 
 
-                int x = gp.objects[gp.currentLevel][i].worldX - gp.player.worldX + gp.player.screenX;
-                int y = gp.objects[gp.currentLevel][i].worldY - gp.player.worldY + gp.player.screenY;
+                int x = gp.objects[gp.currentLevel][gp.currentRoom][i].worldX - gp.player.worldX + gp.player.screenX;
+                int y = gp.objects[gp.currentLevel][gp.currentRoom][i].worldY - gp.player.worldY + gp.player.screenY;
 
-                double distance = Math.sqrt(Math.pow((gp.objects[gp.currentLevel][i].worldX - gp.player.worldX - gp.player.solidArea.width / 2),2) + Math.pow(gp.objects[gp.currentLevel][i].worldY - gp.player.worldY - gp.player.solidArea.height / 2,2));
+                double distance = Math.sqrt(Math.pow((gp.objects[gp.currentLevel][gp.currentRoom][i].worldX - gp.player.worldX - gp.player.solidArea.width / 2),2) + Math.pow(gp.objects[gp.currentLevel][gp.currentRoom][i].worldY - gp.player.worldY - gp.player.solidArea.height / 2,2));
 
                 if(distance <= 40){
                     canTake = true;

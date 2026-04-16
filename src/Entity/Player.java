@@ -42,8 +42,28 @@ public class Player extends Entity{
         speed = 4;
         direction = "down";
 
-        worldX = 100;
-        worldY = 150;
+        worldX = 112;
+        worldY = 434;
+    }
+
+    public void setStartLoadOut(){
+
+        switch(playerClass){
+            case 0 -> {
+                gp.objects[1][1][0] = new BasicSword(gp);
+                gp.objects[1][1][0].worldX = gp.tileSize * 3;
+                gp.objects[1][1][0].worldY = gp.tileSize * 12;
+
+                gp.objects[1][1][2] = new BasicShield(gp);
+                gp.objects[1][1][2].worldX = gp.tileSize * 5;
+                gp.objects[1][1][2].worldY = gp.tileSize * 12;
+            }
+            case 1 -> {
+                gp.objects[1][1][1] = new BasicStaff(gp);
+                gp.objects[1][1][1].worldX = gp.tileSize * 4;
+                gp.objects[1][1][1].worldY = gp.tileSize * 12;
+            }
+        }
     }
 
     public void getImages(){
@@ -137,6 +157,8 @@ public class Player extends Entity{
             objIndex = gp.checker.checkObject(this);
 
             pickUpObject(objIndex);
+
+            gp.events.checkEvent();
         }
     }
 
@@ -146,21 +168,21 @@ public class Player extends Entity{
 
             for(int i = 0; i < inventory.length; i++){
 
-               if(gp.objects[gp.currentLevel][index] != null && gp.handler.takePressed){
+               if(gp.objects[gp.currentLevel][gp.currentRoom][index] != null && gp.handler.takePressed){
                    gp.handler.takePressed = false;
 
-                   switch(gp.objects[gp.currentLevel][index].objType){
+                   switch(gp.objects[gp.currentLevel][gp.currentRoom][index].objType){
                        case 1 -> {
 
                            if(inventory[0] == null){
-                               inventory[0] = gp.objects[gp.currentLevel][index];
-                               gp.objects[gp.currentLevel][index] = null;
+                               inventory[0] = gp.objects[gp.currentLevel][gp.currentRoom][index];
+                               gp.objects[gp.currentLevel][gp.currentRoom][index] = null;
                            }
                        }
                        case 2 -> {
                            if(inventory[1] == null){
-                               inventory[1] = gp.objects[gp.currentLevel][index];
-                               gp.objects[gp.currentLevel][index] = null;
+                               inventory[1] = gp.objects[gp.currentLevel][gp.currentRoom][index];
+                               gp.objects[gp.currentLevel][gp.currentRoom][index] = null;
                            }
                        }
                        case 3 -> {
@@ -168,9 +190,9 @@ public class Player extends Entity{
                            for(int j = 2; j < inventory.length; j++){
 
                                if(inventory[j] == null){
-                                   inventory[j] = gp.objects[gp.currentLevel][index];
+                                   inventory[j] = gp.objects[gp.currentLevel][gp.currentRoom][index];
 
-                                   gp.objects[gp.currentLevel][index] = null;
+                                   gp.objects[gp.currentLevel][gp.currentRoom][index] = null;
 
                                    return;
                                }
@@ -189,12 +211,12 @@ public class Player extends Entity{
         gp.handler.dropPressed = false;
 
         if(inventory[gp.handler.inventorySelector] != null){
-            for(int i = 0; i < gp.objects[gp.currentLevel].length;i++){
+            for(int i = 0; i < gp.objects[gp.currentLevel][gp.currentRoom].length;i++){
 
-                if(gp.objects[gp.currentLevel][i] == null){
+                if(gp.objects[gp.currentLevel][gp.currentRoom][i] == null){
 
                     Entity newObject = cloneObject(inventory[gp.handler.inventorySelector]);
-                    gp.objects[gp.currentLevel][i] = newObject;
+                    gp.objects[gp.currentLevel][gp.currentRoom][i] = newObject;
 
                     switch(direction){
                         case "up","up-left","up-right" -> {

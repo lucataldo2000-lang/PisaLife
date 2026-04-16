@@ -74,6 +74,7 @@ public class KeyHandler implements KeyListener {
                             case 1 -> gp.player.playerClass = gp.player.wizardClass;
                             case 2 -> gp.player.playerClass = gp.player.rangerClass;
                         }
+                        gp.player.setStartLoadOut();
                     }
                 }
             }

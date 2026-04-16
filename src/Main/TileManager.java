@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 public class TileManager extends Tile{
 
     public GamePanel gp;
-    public int[][][] tileNum;
+    public int[][][][] tileNum;
     Tile[] tiles;
 
     public TileManager(GamePanel gp){
@@ -18,11 +18,14 @@ public class TileManager extends Tile{
 
         tiles = new Tile[50];
 
-        tileNum = new int[gp.maxLevel][gp.maxWorldCol][gp.maxWorldRow];
+        tileNum = new int[gp.maxLevel][gp.maxRoom][gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImages();
 
-        loadLevel("/Levels/Level1",1);
+        for(int i = 1; i <= 2; i++){
+            System.out.println(i);
+            loadRoom("/Levels/Level1Room" + i,i);
+        }
     }
 
 
@@ -32,15 +35,27 @@ public class TileManager extends Tile{
             tiles[11].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/SBrick0.png"));
             tiles[11].collision = true;
 
+            tiles[13] = new Tile();
+            tiles[13].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/LightBrick.png"));
+            tiles[13].collision = true;
+
+            tiles[14] = new Tile();
+            tiles[14].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/LightCrackedBrick.png"));
+            tiles[14].collision = true;
+
             tiles[12] = new Tile();
             tiles[12].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/woodplank.png"));
+
+            tiles[15] = new Tile();
+            tiles[15].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/woodplank.png"));
+            tiles[15].collision = true;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadLevel(String file, int level){
+    public void loadRoom(String file, int room){
 
         try{
             InputStream is = getClass().getResourceAsStream(file);
@@ -58,7 +73,7 @@ public class TileManager extends Tile{
                     String[] numbers = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
 
-                    tileNum[level][col][row] = num;
+                    tileNum[gp.currentLevel][room][col][row] = num;
                     col++;
 
                 }
@@ -89,7 +104,7 @@ public class TileManager extends Tile{
 
             while(col < gp.maxWorldCol){
 
-                int num = tileNum[gp.currentLevel][col][row];
+                int num = tileNum[gp.currentLevel][gp.currentRoom][col][row];
 
                 int x = col * gp.tileSize;
                 int y = row * gp.tileSize;

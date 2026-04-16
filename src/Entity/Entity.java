@@ -90,9 +90,9 @@ public class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        for(int i = 0; i < gp.objects[gp.currentLevel].length; i++){
+        for(int i = 0; i < gp.objects[gp.currentLevel][gp.currentRoom].length; i++){
 
-           if(gp.objects[gp.currentLevel][i] != null){
+           if(gp.objects[gp.currentLevel][gp.currentRoom][i] != null){
 
                if(spriteCounter >= 2 && spriteNum < 5){
                    spriteNum = 0;

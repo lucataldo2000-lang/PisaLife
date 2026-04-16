@@ -15,11 +15,13 @@ public class GamePanel extends JPanel implements Runnable{
     public boolean fullScreen = false;
 
     public int currentLevel = 1;
+    public int currentRoom = 1;
     public int screenCol = 16;
     public int screenRow = 10;
     public int screenWidth = screenCol * tileSize;
     public int screenHeight = screenRow * tileSize;
     public final int maxLevel = 3;
+    public final int maxRoom = 10;
 
     public int maxWorldCol = 20;
     public int maxWorldRow = 20;
@@ -47,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable{
     Assets setter = new Assets(this);
     GUI gui = new GUI(this);
     public MouseHandler mouseHandler = new MouseHandler(this);
-
-    public Entity[][] objects = new Entity[maxLevel][20];
+    public Entity[][][] objects = new Entity[maxLevel][maxRoom][20];
+    public EventChecker events = new EventChecker(this);
 
     public GamePanel(){
         this.setDoubleBuffered(true);
@@ -107,7 +109,12 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameThread != null){
 
-            player.update();
+            if(gameState == playState){
+                player.update();
+            }
+
+            System.out.println(player.worldX + " " + player.worldY);
+            System.out.println(player.worldX / tileSize + " " + player.worldY / tileSize);
 
         }
 
@@ -124,9 +131,9 @@ public class GamePanel extends JPanel implements Runnable{
                 case 0 -> {
                     tileManager.drawLevel(g2);
 
-                    for(int i = 0; i < objects[currentLevel].length; i++){
-                        if(objects[currentLevel][i] != null){
-                            objects[currentLevel][i].draw(g2);
+                    for(int i = 0; i < objects[currentLevel][currentRoom].length; i++){
+                        if(objects[currentLevel][currentRoom][i] != null){
+                            objects[currentLevel][currentRoom][i].draw(g2);
                         }
                     }
 
