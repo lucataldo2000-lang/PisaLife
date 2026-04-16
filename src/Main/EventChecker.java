@@ -21,8 +21,8 @@ public class EventChecker {
         waitTime++;
 
         if(waitTime >= 30){
-            if(checkTeleport(1,0,17,12)){gp.currentRoom = 2; waitTime = 0;setPlayerValues(100,380, "right");}
-            if(checkTeleport(1,1,0,12)){gp.currentRoom = 1; waitTime = 0;setPlayerValues(470,380, "left");}
+            if(checkTeleport(1,1,17,12)){gp.currentRoom = 2; waitTime = 0;setPlayerValues(100,380, "right");}
+            if(checkTeleport(1,2,0,12)){gp.currentRoom = 1; waitTime = 0;setPlayerValues(470,380, "left");}
         }
     }
 
@@ -38,21 +38,23 @@ public class EventChecker {
 
         boolean hit = false;
 
-        gp.player.solidArea.x = gp.player.solidArea.x + gp.player.worldX;
-        gp.player.solidArea.y = gp.player.solidArea.y + gp.player.worldY;
+        if(teleportEvent[map][room] != null && gp.currentRoom == room){
+            gp.player.solidArea.x = gp.player.solidArea.x + gp.player.worldX;
+            gp.player.solidArea.y = gp.player.solidArea.y + gp.player.worldY;
 
-        teleportEvent[map][room].x = worldCol * gp.tileSize;
-        teleportEvent[map][room].y = WorldRow * gp.tileSize;
+            teleportEvent[map][room].x = worldCol * gp.tileSize;
+            teleportEvent[map][room].y = WorldRow * gp.tileSize;
 
-        if(gp.player.solidArea.intersects(teleportEvent[map][room])){
-            hit = true;
+            if(gp.player.solidArea.intersects(teleportEvent[map][room])){
+                hit = true;
+            }
+
+            gp.player.solidArea.x = gp.player.solidAreaX;
+            gp.player.solidArea.y = gp.player.solidAreaY;
+
+            teleportEvent[map][room].x = teleportEvent[map][room].zoneX;
+            teleportEvent[map][room].y = teleportEvent[map][room].zoneY;
         }
-
-        gp.player.solidArea.x = gp.player.solidAreaX;
-        gp.player.solidArea.y = gp.player.solidAreaY;
-
-        teleportEvent[map][room].x = teleportEvent[map][room].zoneX;
-        teleportEvent[map][room].y = teleportEvent[map][room].zoneY;
 
         return hit;
 

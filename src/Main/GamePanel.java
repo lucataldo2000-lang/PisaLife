@@ -113,8 +113,8 @@ public class GamePanel extends JPanel implements Runnable{
                 player.update();
             }
 
-            System.out.println(player.worldX + " " + player.worldY);
-            System.out.println(player.worldX / tileSize + " " + player.worldY / tileSize);
+            //System.out.println(player.worldX + " " + player.worldY);
+            //System.out.println(player.worldX / tileSize + " " + player.worldY / tileSize);
 
         }
 
