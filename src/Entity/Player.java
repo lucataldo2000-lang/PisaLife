@@ -54,14 +54,23 @@ public class Player extends Entity{
                 gp.objects[1][1][0].worldX = gp.tileSize * 3;
                 gp.objects[1][1][0].worldY = gp.tileSize * 12;
 
-                gp.objects[1][1][2] = new BasicShield(gp);
-                gp.objects[1][1][2].worldX = gp.tileSize * 5;
-                gp.objects[1][1][2].worldY = gp.tileSize * 12;
+                gp.objects[1][1][1] = new BasicShield(gp);
+                gp.objects[1][1][1].worldX = gp.tileSize * 5;
+                gp.objects[1][1][1].worldY = gp.tileSize * 12;
             }
             case 1 -> {
                 gp.objects[1][1][1] = new BasicStaff(gp);
-                gp.objects[1][1][1].worldX = gp.tileSize * 4;
+                gp.objects[1][1][1].worldX = gp.tileSize * 3;
                 gp.objects[1][1][1].worldY = gp.tileSize * 12;
+
+                gp.objects[1][1][0] = new BasicOrb(gp);
+                gp.objects[1][1][0].worldX = gp.tileSize * 5;
+                gp.objects[1][1][0].worldY = gp.tileSize * 12;
+            }
+            case 2 ->{
+                gp.objects[1][1][0] = new BasicBow(gp);
+                gp.objects[1][1][0].worldX = gp.tileSize * 4;
+                gp.objects[1][1][0].worldY = gp.tileSize * 12;
             }
         }
     }
@@ -145,19 +154,19 @@ public class Player extends Entity{
                     direction = "down-left";
                 }
 
-                if(spriteCounter <= 7){
+                if(spriteCounter <= 4){
                     spriteNum = 0;
                 }
-                if(spriteCounter > 8 && spriteCounter <= 15){
+                if(spriteCounter > 5 && spriteCounter <= 10){
                     spriteNum = 1;
                 }
-                if(spriteCounter > 16 && spriteCounter <= 23){
+                if(spriteCounter > 10 && spriteCounter <= 15){
+                    spriteNum = 0;
+                }
+                if(spriteCounter > 15 && spriteCounter <= 20){
                     spriteNum = 2;
                 }
-                if(spriteCounter > 23 && spriteCounter <= 30){
-                    spriteNum = 1;
-                }
-                if(spriteCounter > 30){
+                if(spriteCounter > 20){
                     spriteCounter = 0;
                 }
 
@@ -188,7 +197,7 @@ public class Player extends Entity{
 
             }
 
-            if(!gp.handler.upPressed || !gp.handler.downPressed || !gp.handler.leftPressed || !gp.handler.rightPressed){
+            if(!gp.handler.upPressed && !gp.handler.downPressed && !gp.handler.leftPressed && !gp.handler.rightPressed){
                 if(spriteCounter <= 15){
                     spriteNum = 0;
                 }
@@ -301,8 +310,6 @@ public class Player extends Entity{
 
         int x = screenX;
         int y = screenY;
-
-        System.out.println(spriteNum);
 
         if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
             switch(direction){

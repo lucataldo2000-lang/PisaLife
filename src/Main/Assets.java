@@ -1,9 +1,6 @@
 package Main;
 
-import Entity.BasicShield;
-import Entity.BasicStaff;
-import Entity.BasicSword;
-import Entity.TorchBlock;
+import Entity.*;
 
 public class Assets {
 

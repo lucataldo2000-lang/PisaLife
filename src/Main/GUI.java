@@ -33,6 +33,7 @@ public class GUI {
             }
             case 1 -> drawTitle(g2);
             case 4 -> drawClassChooser(g2);
+            case 5 -> drawPauseMenu(g2);
         }
     }
 
@@ -127,6 +128,8 @@ public class GUI {
 
     public void drawInventory(Graphics2D g2){
 
+        g2.setFont(new Font("Arial",Font.BOLD, 30));
+
         int x = 15;
         int y = 255;
 
@@ -191,6 +194,44 @@ public class GUI {
 
             }
         }
+    }
+
+    public void drawPauseMenu(Graphics2D g2){
+
+        g2.setColor(new Color(100,100,100,180));
+        g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+        g2.setFont(new Font("Arial",Font.BOLD,30));
+
+        int x = 0;
+        int y = 25;
+
+        String[] lines = {"Continue","Controls","Options","Quit"};
+
+        for(int i = 0; i < lines.length; i++){
+
+            g2.setColor(new Color(40,40,40));
+            g2.fillRect(x - 2,y - 2,200,50);
+
+            g2.setColor(Color.darkGray);
+            g2.fillRect(x,y,200,50);
+
+            g2.setColor(Color.black);
+            g2.drawString(lines[i],x + 13,y + 33);
+
+            g2.setColor(Color.white);
+            g2.drawString(lines[i],x + 15,y + 35);
+
+            y+= 75;
+
+        }
+
+        g2.drawString("<", x + 170, 60 + (75 * gp.handler.pauseSelector));
+
+        g2.setFont(new Font("Arial",Font.BOLD,70));
+
+        g2.drawString("GAME", 280, 100);
+
     }
 
 }

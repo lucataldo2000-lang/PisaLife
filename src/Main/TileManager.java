@@ -50,6 +50,9 @@ public class TileManager extends Tile{
             tiles[15].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/woodplank.png"));
             tiles[15].collision = true;
 
+            tiles[16] = new Tile();
+            tiles[16].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/brokenWoodPlank.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

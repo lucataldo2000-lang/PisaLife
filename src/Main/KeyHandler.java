@@ -8,6 +8,7 @@ public class KeyHandler implements KeyListener {
     public int titleSelector;
     public int classSelector;
     public int inventorySelector;
+    public int pauseSelector;
     public boolean upPressed,downPressed,leftPressed,rightPressed,takePressed,dropPressed;
     GamePanel gp;
 
@@ -44,6 +45,7 @@ public class KeyHandler implements KeyListener {
                 case KeyEvent.VK_4 -> inventorySelector = 3;
                 case KeyEvent.VK_5 -> inventorySelector = 4;
                 case KeyEvent.VK_Q -> dropPressed = true;
+                case KeyEvent.VK_ESCAPE -> gp.gameState = gp.pauseState;
             }
         }
         if(gp.gameState == gp.titleState){
@@ -75,6 +77,25 @@ public class KeyHandler implements KeyListener {
                             case 2 -> gp.player.playerClass = gp.player.rangerClass;
                         }
                         gp.player.setStartLoadOut();
+                    }
+                }
+            }
+        }
+        if(gp.gameState == gp.pauseState){
+            switch(code){
+                case KeyEvent.VK_W -> {if(pauseSelector - 1 == -1){pauseSelector = 3;} else{pauseSelector--;}}
+                case KeyEvent.VK_S -> {if(pauseSelector + 1 == 4){pauseSelector = 0;} else{pauseSelector++;}}
+                case KeyEvent.VK_UP -> {if(pauseSelector - 1 == -1){pauseSelector = 3;} else{pauseSelector--;}}
+                case KeyEvent.VK_DOWN -> {if(pauseSelector + 1 == 4){pauseSelector = 0;} else{pauseSelector++;}}
+                case KeyEvent.VK_ENTER -> {
+                    switch (pauseSelector){
+                        case 0 -> gp.gameState = gp.playState;
+                        case 3 -> System.exit(0);
+                    }
+                }
+                case KeyEvent.VK_ESCAPE -> {
+                    if(gp.waitTime >= 2) {
+                        gp.gameState = gp.playState;
                     }
                 }
             }

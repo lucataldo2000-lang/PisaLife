@@ -36,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int deathState = 2;
     public final int dialogueState = 3;
     public final int classChooserState = 4;
+    public final int pauseState = 5;
 
     public int waitTime;
 
@@ -110,7 +111,18 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameThread != null){
 
             if(gameState == playState){
+
+                if(waitTime != 0){
+                    waitTime = 0;
+                }
+
                 player.update();
+            }
+            if(gameState == classChooserState){
+                waitTime++;
+            }
+            if(gameState == pauseState){
+                waitTime++;
             }
 
             //System.out.println(player.worldX + " " + player.worldY);
@@ -127,20 +139,15 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameThread != null){
 
-            switch(gameState){
-                case 0 -> {
-                    tileManager.drawLevel(g2);
+            tileManager.drawLevel(g2);
 
-                    for(int i = 0; i < objects[currentLevel][currentRoom].length; i++){
-                        if(objects[currentLevel][currentRoom][i] != null){
-                            objects[currentLevel][currentRoom][i].draw(g2);
-                        }
-                    }
-
-                    player.draw(g2);
+            for(int i = 0; i < objects[currentLevel][currentRoom].length; i++){
+                if(objects[currentLevel][currentRoom][i] != null){
+                    objects[currentLevel][currentRoom][i].draw(g2);
                 }
-                case 4 -> waitTime++;
             }
+
+            player.draw(g2);
 
             gui.draw(g2);
 
