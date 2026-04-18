@@ -79,10 +79,29 @@ public class Player extends Entity{
             left[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard3.png"));
             right[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard2.png"));
 
+            up[1][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim2.png"));
+            down[1][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim0.png"));
+            left[1][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim6.png"));
+            right[1][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim4.png"));
+
+            up[1][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim3.png"));
+            down[1][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim1.png"));
+            left[1][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim7.png"));
+            right[1][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizAnim5.png"));
+
             up[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer1.png"));
             down[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
             left[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
             right[2][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
+
+            upIdle[1][0] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz0.png"));
+            upIdle[1][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz1.png"));
+            downIdle[1][0] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz2.png"));
+            downIdle[1][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz3.png"));
+            leftIdle[1][0] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz4.png"));
+            leftIdle[1][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz5.png"));
+            rightIdle[1][0] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz6.png"));
+            rightIdle[1][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz7.png"));
 
 
         }catch(IOException e){e.printStackTrace();}
@@ -91,6 +110,8 @@ public class Player extends Entity{
     public void update(){
 
         if(gp.gameThread != null && gp.gameState == gp.playState){
+
+            spriteCounter++;
 
             if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
 
@@ -124,6 +145,22 @@ public class Player extends Entity{
                     direction = "down-left";
                 }
 
+                if(spriteCounter <= 7){
+                    spriteNum = 0;
+                }
+                if(spriteCounter > 8 && spriteCounter <= 15){
+                    spriteNum = 1;
+                }
+                if(spriteCounter > 16 && spriteCounter <= 23){
+                    spriteNum = 2;
+                }
+                if(spriteCounter > 23 && spriteCounter <= 30){
+                    spriteNum = 1;
+                }
+                if(spriteCounter > 30){
+                    spriteCounter = 0;
+                }
+
                 if(!collisionOn){
                     switch(direction){
                         case "down" -> worldY += speed;
@@ -150,6 +187,19 @@ public class Player extends Entity{
                 }
 
             }
+
+            if(!gp.handler.upPressed || !gp.handler.downPressed || !gp.handler.leftPressed || !gp.handler.rightPressed){
+                if(spriteCounter <= 15){
+                    spriteNum = 0;
+                }
+                if(spriteCounter > 15 && spriteCounter <= 30){
+                    spriteNum = 1;
+                }
+                if(spriteCounter > 30){
+                    spriteCounter = 0;
+                }
+            }
+
             if(gp.handler.dropPressed){
                 dropObject();
             }
@@ -252,11 +302,23 @@ public class Player extends Entity{
         int x = screenX;
         int y = screenY;
 
-        switch(direction){
-            case "up" -> image = up[playerClass][0];
-            case "down" -> image = down[playerClass][0];
-            case "left","up-left","down-left" -> image = left[playerClass][0];
-            case "right","up-right","down-right" -> image = right[playerClass][0];
+        System.out.println(spriteNum);
+
+        if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
+            switch(direction){
+                case "up" -> image = up[playerClass][spriteNum];
+                case "down" -> image = down[playerClass][spriteNum];
+                case "left","up-left","down-left" -> image = left[playerClass][spriteNum];
+                case "right","up-right","down-right" -> image = right[playerClass][spriteNum];
+            }
+        }
+        else{
+            switch(direction){
+                case "up" -> image = upIdle[playerClass][spriteNum];
+                case "down" -> image = downIdle[playerClass][spriteNum];
+                case "left","up-left","down-left" -> image = leftIdle[playerClass][spriteNum];
+                case "right","up-right","down-right" -> image = rightIdle[playerClass][spriteNum];
+            }
         }
 
         g2.drawImage(image,x,y,gp.tileSize * 2,gp.tileSize * 2,null);

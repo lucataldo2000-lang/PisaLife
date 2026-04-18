@@ -48,6 +48,11 @@ public class Entity {
     BufferedImage[][] left = new BufferedImage[3][3];
     BufferedImage[][] right = new BufferedImage[3][3];
 
+    BufferedImage[][] upIdle = new BufferedImage[3][2];
+    BufferedImage[][] downIdle = new BufferedImage[3][2];
+    BufferedImage[][] leftIdle = new BufferedImage[3][2];
+    BufferedImage[][] rightIdle = new BufferedImage[3][2];
+
     public int spriteCounter;
     public int spriteNum;
 
