@@ -8,19 +8,20 @@ import java.io.IOException;
 public class GUI {
 
     GamePanel gp;
-    BufferedImage image1,image2,image3,inventoryImage,slotImage,takeImage;
+    BufferedImage image1,image2,image3,inventoryImage,slotImage,takeImage,healthBar;
     public boolean canTake;
 
     public GUI(GamePanel gp){
         this.gp = gp;
 
         try{
-            image1 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior0.png"));
+            image1 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior0.png"));
             image2 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
             image3 = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/archer0.png"));
             inventoryImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/inventory.png"));
             slotImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/slot.png"));
             takeImage = ImageIO.read(getClass().getResourceAsStream("/GUITextures/takeObject.png"));
+            healthBar = ImageIO.read(getClass().getResourceAsStream("/GUITextures/HealthBar.png"));
         }catch(IOException e){e.printStackTrace();}
     }
 
@@ -30,8 +31,10 @@ public class GUI {
             case 0 -> {
                 drawInventory(g2);
                 drawTakeObject(g2);
+                drawPlayerLife(g2);
             }
             case 1 -> drawTitle(g2);
+            case 2 -> drawDeathScreen(g2);
             case 4 -> drawClassChooser(g2);
             case 5 -> drawPauseMenu(g2);
         }
@@ -143,7 +146,7 @@ public class GUI {
         y = 250;
 
         switch (gp.handler.inventorySelector){
-            case 0 -> x = 34;
+            case 0 -> x = 32;
             case 1 -> x = 89;
             case 2 -> x = 150;
             case 3 -> x = 195;
@@ -231,6 +234,55 @@ public class GUI {
         g2.setFont(new Font("Arial",Font.BOLD,70));
 
         g2.drawString("GAME", 280, 100);
+
+    }
+
+    public void drawPlayerLife(Graphics2D g2){
+
+        int x = 15;
+        int y = 15;
+
+        g2.setColor(new Color(207, 69, 64));
+        g2.fillRect(x + 60,y + 15,Math.round(gp.player.life * 1.1f),30);
+
+        g2.drawImage(healthBar,x,y,180,60,null);
+
+    }
+
+    public void drawDeathScreen(Graphics2D g2){
+
+        int x;
+        int y;
+
+        g2.setColor(Color.black);
+        g2.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+
+        g2.setFont(new Font("Arial",Font.BOLD, 50));
+
+        g2.setColor(Color.red);
+        g2.drawString("YOU DIED", 110, gp.screenHeight / 2);
+
+        g2.setFont(new Font("Arial",Font.BOLD, 30));
+
+        g2.setColor(Color.white);
+
+        y = 250;
+        x = 85;
+        g2.drawString("RETRY", x, y);
+
+        x = 300;
+        g2.drawString("QUIT",x,y);
+
+        y = 210;
+
+        switch (gp.handler.deathSelector){
+            case 0 -> x = 120;
+            case 1 -> x = 335;
+        }
+
+        g2.setColor(Color.white);
+
+        g2.drawString("v", x,y);
 
     }
 

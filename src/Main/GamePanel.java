@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable{
     public int screenHeight = screenRow * tileSize;
     public final int maxLevel = 3;
     public final int maxRoom = 10;
+    public final int maxObj = 20;
 
     public int maxWorldCol = 20;
     public int maxWorldRow = 20;
@@ -42,15 +43,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     BufferedImage tempScreen;
 
-    TileManager tileManager = new TileManager(this);
+    public TileManager tileManager = new TileManager(this);
     public KeyHandler handler = new KeyHandler(this);
     public Player player = new Player(this);
     public Collision checker = new Collision(this);
-    Entity entity = new Entity(this);
-    Assets setter = new Assets(this);
-    GUI gui = new GUI(this);
+    public Assets setter = new Assets(this);
+    public GUI gui = new GUI(this);
     public MouseHandler mouseHandler = new MouseHandler(this);
-    public Entity[][][] objects = new Entity[maxLevel][maxRoom][20];
+    public Entity[][][] objects = new Entity[maxLevel][maxRoom][maxObj];
     public EventChecker events = new EventChecker(this);
 
     public GamePanel(){
@@ -117,6 +117,12 @@ public class GamePanel extends JPanel implements Runnable{
                 }
 
                 player.update();
+
+                if(player.life <= 0){
+                    player.life = 0;
+                    gameState = deathState;
+                }
+
             }
             if(gameState == classChooserState){
                 waitTime++;

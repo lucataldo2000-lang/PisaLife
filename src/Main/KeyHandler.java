@@ -5,10 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public int titleSelector;
-    public int classSelector;
-    public int inventorySelector;
-    public int pauseSelector;
+    public int titleSelector,classSelector,inventorySelector,pauseSelector,deathSelector;
     public boolean upPressed,downPressed,leftPressed,rightPressed,takePressed,dropPressed;
     GamePanel gp;
 
@@ -58,6 +55,20 @@ public class KeyHandler implements KeyListener {
                     switch(titleSelector){
                         case 0 -> gp.gameState = gp.classChooserState;
                         case 3 -> System.exit(0);
+                    }
+                }
+            }
+        }
+        if(gp.gameState == gp.deathState){
+            switch(code){
+                case KeyEvent.VK_A -> {if(deathSelector - 1 == -1){deathSelector = 1;} else{deathSelector--;}}
+                case KeyEvent.VK_D -> {if(deathSelector + 1 == 2){deathSelector = 0;} else{deathSelector++;}}
+                case KeyEvent.VK_RIGHT -> {if(deathSelector - 1 == -1){deathSelector = 1;} else{deathSelector--;}}
+                case KeyEvent.VK_LEFT -> {if(deathSelector + 1 == 2){deathSelector = 0;} else{deathSelector++;}}
+                case KeyEvent.VK_ENTER -> {
+                    switch(deathSelector){
+                        case 0 -> {gp.gameState = gp.playState; gp.player.resetPlayer();}
+                        case 1 -> System.exit(0);
                     }
                 }
             }

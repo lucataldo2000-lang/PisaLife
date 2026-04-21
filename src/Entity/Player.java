@@ -37,6 +37,8 @@ public class Player extends Entity{
     }
 
     public void setUp(){
+        gp.currentRoom = 1;
+        gp.currentLevel = 1;
         maxLife = 100;
         life = maxLife;
         speed = 4;
@@ -44,6 +46,44 @@ public class Player extends Entity{
 
         worldX = 112;
         worldY = 434;
+    }
+
+    public void resetPlayer(){
+
+        setUp();
+
+        int level = 0;
+        int room = 0;
+        int obj = 0;
+
+        while(level < gp.maxLevel){
+
+            if(gp.objects[level][room][obj] != null){
+                gp.objects[level][room][obj] = null;
+            }
+
+            obj++;
+
+            if(obj == gp.maxObj){
+                room++;
+                obj = 0;
+            }
+            if(room == gp.maxRoom){
+                room = 0;
+                level++;
+            }
+
+        }
+
+        for(int i = 0; i < inventory.length; i++){
+
+            if(inventory[i] != null){
+                inventory[i] = null;
+            }
+        }
+
+        setStartLoadOut();
+        gp.setter.setObj();
     }
 
     public void setStartLoadOut(){
@@ -78,10 +118,20 @@ public class Player extends Entity{
     public void getImages(){
         try{
 
-            up[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior1.png"));
-            down[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior0.png"));
-            left[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior3.png"));
-            right[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/basewarrior2.png"));
+            up[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior3.png"));
+            down[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior0.png"));
+            left[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior9.png"));
+            right[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior6.png"));
+
+            up[0][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior4.png"));
+            down[0][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior1.png"));
+            left[0][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior10.png"));
+            right[0][1] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior7.png"));
+
+            up[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior5.png"));
+            down[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior2.png"));
+            left[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior11.png"));
+            right[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior8.png"));
 
             up[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard1.png"));
             down[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
@@ -111,6 +161,15 @@ public class Player extends Entity{
             leftIdle[1][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz5.png"));
             rightIdle[1][0] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz6.png"));
             rightIdle[1][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/wiz7.png"));
+
+            upIdle[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior3.png"));
+            upIdle[0][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/warrior1.png"));
+            downIdle[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior0.png"));
+            downIdle[0][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/warrior0.png"));
+            leftIdle[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior9.png"));
+            leftIdle[0][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/warrior3.png"));
+            rightIdle[0][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior6.png"));
+            rightIdle[0][1] = ImageIO.read(getClass().getResourceAsStream("/IdlePlayerAnimations/warrior2.png"));
 
 
         }catch(IOException e){e.printStackTrace();}
