@@ -22,8 +22,7 @@ public class TileManager extends Tile{
 
         getTileImages();
 
-        for(int i = 1; i <= 2; i++){
-            System.out.println(i);
+        for(int i = 1; i <= 3; i++){
             loadRoom("/Levels/Level1Room" + i,i);
         }
     }
@@ -100,7 +99,6 @@ public class TileManager extends Tile{
 
         int col = 0;
         int row = 0;
-
 
         while(col < gp.maxWorldCol && row < gp.maxWorldRow){
 

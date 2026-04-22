@@ -1,15 +1,23 @@
 package Main;
 
 import java.awt.*;
+import java.util.Random;
 
 public class EventChecker {
+
+    Random random = new Random();
 
     GamePanel gp;
     EventZone[][] teleportEvent;
     int waitTime;
+    int[] room;
+    int randomNumber;
 
     EventChecker(GamePanel gp){
         this.gp = gp;
+        room = new int[gp.maxRoom];
+        room[0] = 1;
+        room[1] = 1;
 
         teleportEvent = new EventZone[gp.maxLevel][gp.maxRoom];
 
@@ -21,8 +29,21 @@ public class EventChecker {
         waitTime++;
 
         if(waitTime >= 30){
-            if(checkTeleport(1,1,17,12)){gp.currentRoom = 2; waitTime = 0;setPlayerValues(100,380, "right");}
-            if(checkTeleport(1,2,0,12)){gp.currentRoom = 1; waitTime = 0;setPlayerValues(470,380, "left");}
+            if(checkTeleport(1,1,17,12)){
+                if(room[2] != 2 && room[2] != 3){
+                    int newRoom = random.nextInt(2,4);
+                    room[2] = newRoom;
+                }
+
+                waitTime = 0;
+
+                gp.currentRoom = room[2];
+
+                setPlayerValues(100,380, "right");
+                return;
+            }
+            if(checkTeleport(1,2,0,12)){gp.currentRoom = room[1]; waitTime = 0;setPlayerValues(470,380, "left");}
+            if(checkTeleport(1,3,0,12)){gp.currentRoom = room[1]; waitTime = 0;setPlayerValues(470,380, "left");}
         }
     }
 
