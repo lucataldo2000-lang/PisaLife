@@ -27,6 +27,8 @@ public class Entity {
     public int defence;
     public Rectangle solidArea;
     public boolean collisionOn = false;
+    public boolean attacking = false;
+    public boolean canTakeDamage = false;
 
     public int solidAreaX;
     public int solidAreaY;
@@ -52,6 +54,11 @@ public class Entity {
     BufferedImage[][] downIdle = new BufferedImage[3][2];
     BufferedImage[][] leftIdle = new BufferedImage[3][2];
     BufferedImage[][] rightIdle = new BufferedImage[3][2];
+
+    BufferedImage[][] upAttack = new BufferedImage[3][3];
+    BufferedImage[][] downAttack = new BufferedImage[3][3];
+    BufferedImage[][] leftAttack = new BufferedImage[3][3];
+    BufferedImage[][] rightAttack = new BufferedImage[3][3];
 
     public int spriteCounter;
     public int spriteNum;

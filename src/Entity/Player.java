@@ -133,6 +133,21 @@ public class Player extends Entity{
             left[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior11.png"));
             right[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior8.png"));
 
+            upAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown3.png"));
+            downAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown0.png"));
+            rightAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight0.png"));
+            leftAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight3.png"));
+
+            upAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown4.png"));
+            downAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown1.png"));
+            rightAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight1.png"));
+            leftAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight4.png"));
+
+            upAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown5.png"));
+            downAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown2.png"));
+            rightAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight2.png"));
+            leftAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight5.png"));
+
             up[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard1.png"));
             down[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
             left[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard3.png"));
@@ -179,39 +194,105 @@ public class Player extends Entity{
 
         if(gp.gameThread != null && gp.gameState == gp.playState){
 
-            spriteCounter++;
+            if(!attacking){
+                spriteCounter++;
+                if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
 
-            if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
+                    collisionOn = false;
 
-                collisionOn = false;
+                    gp.checker.checkTile(this);
 
-                gp.checker.checkTile(this);
+                    if(gp.handler.upPressed){
+                        direction = "up";
+                    }
+                    if(gp.handler.downPressed){
+                        direction = "down";
+                    }
+                    if(gp.handler.leftPressed){
+                        direction = "left";
+                    }
+                    if(gp.handler.rightPressed){
+                        direction = "right";
+                    }
 
-                if(gp.handler.upPressed){
-                    direction = "up";
-                }
-                if(gp.handler.downPressed){
-                    direction = "down";
-                }
-                if(gp.handler.leftPressed){
-                    direction = "left";
-                }
-                if(gp.handler.rightPressed){
-                    direction = "right";
+                    if(gp.handler.upPressed && gp.handler.rightPressed){
+                        direction = "up-right";
+                    }
+                    if(gp.handler.upPressed && gp.handler.leftPressed){
+                        direction = "up-left";
+                    }
+                    if(gp.handler.downPressed && gp.handler.rightPressed){
+                        direction = "down-right";
+                    }
+                    if(gp.handler.downPressed && gp.handler.leftPressed){
+                        direction = "down-left";
+                    }
+
+                    if(spriteCounter <= 4){
+                        spriteNum = 0;
+                    }
+                    if(spriteCounter > 5 && spriteCounter <= 10){
+                        spriteNum = 1;
+                    }
+                    if(spriteCounter > 10 && spriteCounter <= 15){
+                        spriteNum = 0;
+                    }
+                    if(spriteCounter > 15 && spriteCounter <= 20){
+                        spriteNum = 2;
+                    }
+                    if(spriteCounter > 20){
+                        spriteCounter = 0;
+                    }
+
+                    if(!collisionOn){
+                        switch(direction){
+                            case "down" -> worldY += speed;
+                            case "up" -> worldY -= speed;
+                            case "left" ->  worldX -= speed;
+                            case "right" -> worldX += speed;
+                            case "down-left" -> {
+                                worldY += speed - 1;
+                                worldX -= speed - 1;
+                            }
+                            case "up-left" -> {
+                                worldY -= speed - 1;
+                                worldX -= speed - 1;
+                            }
+                            case "down-right" ->  {
+                                worldY += speed - 1;
+                                worldX += speed - 1;
+                            }
+                            case "up-right" -> {
+                                worldY -= speed - 1;
+                                worldX += speed - 1;
+                            }
+                        }
+                    }
+
                 }
 
-                if(gp.handler.upPressed && gp.handler.rightPressed){
-                    direction = "up-right";
+                if(!gp.handler.upPressed && !gp.handler.downPressed && !gp.handler.leftPressed && !gp.handler.rightPressed){
+                    if(spriteCounter <= 15){
+                        spriteNum = 0;
+                    }
+                    if(spriteCounter > 15 && spriteCounter <= 30){
+                        spriteNum = 1;
+                    }
+                    if(spriteCounter > 30){
+                        spriteCounter = 0;
+                    }
                 }
-                if(gp.handler.upPressed && gp.handler.leftPressed){
-                    direction = "up-left";
+
+                if(gp.handler.dropPressed){
+                    dropObject();
                 }
-                if(gp.handler.downPressed && gp.handler.rightPressed){
-                    direction = "down-right";
-                }
-                if(gp.handler.downPressed && gp.handler.leftPressed){
-                    direction = "down-left";
-                }
+
+                objIndex = gp.checker.checkObject(this);
+
+                pickUpObject(objIndex);
+            }
+            else{
+                spriteCounter++;
 
                 if(spriteCounter <= 4){
                     spriteNum = 0;
@@ -220,61 +301,16 @@ public class Player extends Entity{
                     spriteNum = 1;
                 }
                 if(spriteCounter > 10 && spriteCounter <= 15){
-                    spriteNum = 0;
-                }
-                if(spriteCounter > 15 && spriteCounter <= 20){
                     spriteNum = 2;
                 }
-                if(spriteCounter > 20){
+
+                if(spriteCounter > 15){
                     spriteCounter = 0;
-                }
-
-                if(!collisionOn){
-                    switch(direction){
-                        case "down" -> worldY += speed;
-                        case "up" -> worldY -= speed;
-                        case "left" ->  worldX -= speed;
-                        case "right" -> worldX += speed;
-                        case "down-left" -> {
-                            worldY += speed - 1;
-                            worldX -= speed - 1;
-                        }
-                        case "up-left" -> {
-                            worldY -= speed - 1;
-                            worldX -= speed - 1;
-                        }
-                        case "down-right" ->  {
-                            worldY += speed - 1;
-                            worldX += speed - 1;
-                        }
-                        case "up-right" -> {
-                            worldY -= speed - 1;
-                            worldX += speed - 1;
-                        }
-                    }
-                }
-
-            }
-
-            if(!gp.handler.upPressed && !gp.handler.downPressed && !gp.handler.leftPressed && !gp.handler.rightPressed){
-                if(spriteCounter <= 15){
                     spriteNum = 0;
-                }
-                if(spriteCounter > 15 && spriteCounter <= 30){
-                    spriteNum = 1;
-                }
-                if(spriteCounter > 30){
-                    spriteCounter = 0;
+                    attacking = false;
                 }
             }
 
-            if(gp.handler.dropPressed){
-                dropObject();
-            }
-
-            objIndex = gp.checker.checkObject(this);
-
-            pickUpObject(objIndex);
 
             gp.events.checkEvent();
         }
@@ -370,24 +406,48 @@ public class Player extends Entity{
         int x = screenX;
         int y = screenY;
 
-        if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
-            switch(direction){
-                case "up" -> image = up[playerClass][spriteNum];
-                case "down" -> image = down[playerClass][spriteNum];
-                case "left","up-left","down-left" -> image = left[playerClass][spriteNum];
-                case "right","up-right","down-right" -> image = right[playerClass][spriteNum];
+        int width = 0;
+        int height = 0;
+
+        if(!attacking){
+            width = gp.tileSize * 2;
+            height = gp.tileSize * 2;
+
+            if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
+                switch(direction){
+                    case "up" -> image = up[playerClass][spriteNum];
+                    case "down" -> image = down[playerClass][spriteNum];
+                    case "left","up-left","down-left" -> image = left[playerClass][spriteNum];
+                    case "right","up-right","down-right" -> image = right[playerClass][spriteNum];
+                }
+            }
+            else{
+                switch(direction){
+                    case "up" -> image = upIdle[playerClass][spriteNum];
+                    case "down" -> image = downIdle[playerClass][spriteNum];
+                    case "left","up-left","down-left" -> image = leftIdle[playerClass][spriteNum];
+                    case "right","up-right","down-right" -> image = rightIdle[playerClass][spriteNum];
+                }
             }
         }
         else{
             switch(direction){
-                case "up" -> image = upIdle[playerClass][spriteNum];
-                case "down" -> image = downIdle[playerClass][spriteNum];
-                case "left","up-left","down-left" -> image = leftIdle[playerClass][spriteNum];
-                case "right","up-right","down-right" -> image = rightIdle[playerClass][spriteNum];
+                case "up" -> {
+                    image = upAttack[playerClass][spriteNum]; width = gp.tileSize * 2; height = gp.tileSize * 3; y = screenY - gp.tileSize;
+                }
+                case "down" -> {
+                    image = downAttack[playerClass][spriteNum]; width = gp.tileSize * 2; height = gp.tileSize * 3; y = screenY + gp.tileSize / 2 - 12;
+                }
+                case "left","up-left","down-left" -> {
+                    image = leftAttack[playerClass][spriteNum]; height = gp.tileSize * 2; width = gp.tileSize * 3; x = screenX - gp.tileSize * 2 + 14;
+                }
+                case "right","up-right","down-right" -> {
+                    image = rightAttack[playerClass][spriteNum]; height = gp.tileSize * 2; width = gp.tileSize * 3; x = screenX + gp.tileSize - 14;
+                }
             }
         }
 
-        g2.drawImage(image,x,y,gp.tileSize * 2,gp.tileSize * 2,null);
+        g2.drawImage(image,x,y,width,height,null);
 
     }
 }

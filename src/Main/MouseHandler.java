@@ -2,7 +2,7 @@ package Main;
 
 import java.awt.event.*;
 
-public class MouseHandler implements MouseWheelListener {
+public class MouseHandler implements MouseWheelListener, MouseListener{
 
     GamePanel gp;
 
@@ -22,5 +22,42 @@ public class MouseHandler implements MouseWheelListener {
                 }
             }
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+        int button = e.getButton();
+
+        switch (button){
+            case MouseEvent.BUTTON1 -> {
+                if(!gp.player.attacking){
+                    gp.player.attacking = true;
+                    gp.player.spriteNum = 0;
+                    gp.player.spriteCounter = 0;
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

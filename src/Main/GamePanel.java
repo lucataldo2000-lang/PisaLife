@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
         this.addKeyListener(handler);
         this.addMouseWheelListener(mouseHandler);
+        this.addMouseListener(mouseHandler);
     }
 
     public void startThread(){
