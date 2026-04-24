@@ -243,7 +243,7 @@ public class GUI {
         int y = 15;
 
         g2.setColor(new Color(207, 69, 64));
-        g2.fillRect(x + 60,y + 15,Math.round(gp.player.life * 1.1f),30);
+        g2.fillRect(x + 60,y + 15,Math.round(gp.player.life * 1.13f),30);
 
         g2.drawImage(healthBar,x,y,180,60,null);
 

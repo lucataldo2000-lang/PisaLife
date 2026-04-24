@@ -29,6 +29,7 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean attacking = false;
     public boolean canTakeDamage = false;
+    public boolean isMoving = false;
 
     public int solidAreaX;
     public int solidAreaY;
@@ -54,6 +55,16 @@ public class Entity {
     BufferedImage[][] downIdle = new BufferedImage[3][2];
     BufferedImage[][] leftIdle = new BufferedImage[3][2];
     BufferedImage[][] rightIdle = new BufferedImage[3][2];
+
+    BufferedImage[] upMonster = new BufferedImage[3];
+    BufferedImage[] downMonster = new BufferedImage[3];
+    BufferedImage[] leftMonster = new BufferedImage[3];
+    BufferedImage[] rightMonster = new BufferedImage[3];
+
+    BufferedImage[] upIdleMonster = new BufferedImage[2];
+    BufferedImage[] downIdleMonster = new BufferedImage[2];
+    BufferedImage[] leftIdleMonster = new BufferedImage[2];
+    BufferedImage[] rightIdleMonster = new BufferedImage[2];
 
     BufferedImage[][] upAttack = new BufferedImage[3][3];
     BufferedImage[][] downAttack = new BufferedImage[3][3];

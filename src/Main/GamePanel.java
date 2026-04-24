@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int maxLevel = 3;
     public final int maxRoom = 10;
     public final int maxObj = 20;
+    public final int maxMonsters = 5;
 
     public int maxWorldCol = 20;
     public int maxWorldRow = 20;
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
     public GUI gui = new GUI(this);
     public MouseHandler mouseHandler = new MouseHandler(this);
     public Entity[][][] objects = new Entity[maxLevel][maxRoom][maxObj];
+    public Entity[][][] monsters = new Entity[maxLevel][maxRoom][maxMonsters];
     public EventChecker events = new EventChecker(this);
 
     public GamePanel(){
