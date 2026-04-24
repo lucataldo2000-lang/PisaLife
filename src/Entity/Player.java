@@ -14,7 +14,7 @@ public class Player extends Entity{
     public int screenY;
 
     public Entity[] inventory = new Entity[5];
-    public int objIndex;
+    public int objIndex,monsterIndex;
 
     public Player(GamePanel gp){
         super(gp);
@@ -201,6 +201,7 @@ public class Player extends Entity{
                     collisionOn = false;
 
                     gp.checker.checkTile(this);
+                    monsterIndex = gp.checker.checkMonster(this);
 
                     if(gp.handler.upPressed){
                         direction = "up";

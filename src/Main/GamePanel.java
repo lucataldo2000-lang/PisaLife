@@ -73,6 +73,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         gameState = titleState;
         setter.setObj();
+        setter.setMonsters();
 
         tempScreen = new BufferedImage(screenWidth, screenHeight,BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D)tempScreen.getGraphics();
@@ -121,6 +122,12 @@ public class GamePanel extends JPanel implements Runnable{
 
                 player.update();
 
+                for(int i = 0; i < monsters[currentLevel][currentRoom].length; i++){
+                    if(monsters[currentLevel][currentRoom][i] != null){
+                        monsters[currentLevel][currentRoom][i].update();
+                    }
+                }
+
                 if(player.life <= 0){
                     player.life = 0;
                     gameState = deathState;
@@ -153,6 +160,12 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < objects[currentLevel][currentRoom].length; i++){
                 if(objects[currentLevel][currentRoom][i] != null){
                     objects[currentLevel][currentRoom][i].draw(g2);
+                }
+            }
+
+            for(int i = 0; i < monsters[currentLevel][currentRoom].length; i++){
+                if(monsters[currentLevel][currentRoom][i] != null){
+                    monsters[currentLevel][currentRoom][i].draw(g2);
                 }
             }
 

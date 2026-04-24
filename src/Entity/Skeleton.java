@@ -24,12 +24,14 @@ public class Skeleton extends Entity{
         direction = "down";
 
         type = monsterType;
-        solidArea = new Rectangle(40,40);
-        solidArea.x = 12;
+        solidArea = new Rectangle(20,40);
+        solidArea.x = 22;
         solidArea.y = 22;
 
         solidAreaX = solidArea.x;
         solidAreaY = solidArea.y;
+
+        getImages();
     }
 
     public void getImages(){
@@ -42,13 +44,13 @@ public class Skeleton extends Entity{
 
             upMonster[1] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim4.png"));
             downMonster[1] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim1.png"));
-            leftMonster[1] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim10.png"));
-            rightMonster[1] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim7.png"));
+            leftMonster[1] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim7.png"));
+            rightMonster[1] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim10.png"));
 
             upMonster[2] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim5.png"));
             downMonster[2] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim2.png"));
-            leftMonster[2] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim11.png"));
-            rightMonster[2] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim8.png"));
+            leftMonster[2] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim8.png"));
+            rightMonster[2] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeletonAnim11.png"));
 
 
             upIdleMonster[0] = ImageIO.read(getClass().getResourceAsStream("/SkeletonTextures/skeleton1.png"));
@@ -64,32 +66,40 @@ public class Skeleton extends Entity{
         }catch(IOException e){e.printStackTrace();}
     }
 
+    int num = 0;
+    int randomDirection = 0;
+
     public void update(){
 
         if(gp.gameThread != null && gp.gameState == gp.playState){
-
-            int randomDirection = random.nextInt(1,13);
-            int waitTime = random.nextInt(30,121);
-            int num = 0;
+            num++;
 
             spriteCounter++;
 
             if(!attacking){
-                if(randomDirection < 10){
-                    collisionOn = false;
+                collisionOn = false;
+                gp.checker.checkTile(this);
+                gp.checker.checkPlayer(this);
 
-                    switch(randomDirection){
-                        case 0 -> direction = "up";
-                        case 1 -> direction = "down";
-                        case 2 -> direction = "left";
-                        case 3 -> direction = "right";
-                        case 4 -> direction = "up-right";
-                        case 5 -> direction = "up-left";
-                        case 6 -> direction = "down-right";
-                        case 7 -> direction = "down-left";
-                    }
+                if(num >= 60){
+                    randomDirection = random.nextInt(1,12);
+                    num = 0;
+                }
 
-                    gp.checker.checkTile(this);
+                switch(randomDirection){
+                    case 0 -> direction = "up";
+                    case 1 -> direction = "down";
+                    case 2 -> direction = "left";
+                    case 3 -> direction = "right";
+                    case 4 -> direction = "up-right";
+                    case 5 -> direction = "up-left";
+                    case 6 -> direction = "down-right";
+                    case 7 -> direction = "down-left";
+                }
+
+                if(randomDirection < 10 && !collisionOn){
+                    isMoving = true;
+
 
                     if(spriteCounter <= 4){
                         spriteNum = 0;
@@ -107,36 +117,31 @@ public class Skeleton extends Entity{
                         spriteCounter = 0;
                     }
 
-                    if(!collisionOn){
-                        while(num < waitTime){
-                            switch(direction){
-                                case "down" -> worldY += speed;
-                                case "up" -> worldY -= speed;
-                                case "left" ->  worldX -= speed;
-                                case "right" -> worldX += speed;
-                                case "down-left" -> {
-                                    worldY += speed - 1;
-                                    worldX -= speed - 1;
-                                }
-                                case "up-left" -> {
-                                    worldY -= speed - 1;
-                                    worldX -= speed - 1;
-                                }
-                                case "down-right" ->  {
-                                    worldY += speed - 1;
-                                    worldX += speed - 1;
-                                }
-                                case "up-right" -> {
-                                    worldY -= speed - 1;
-                                    worldX += speed - 1;
-                                }
-                            }
-
-                            num++;
+                    switch(direction){
+                        case "down" -> worldY += speed;
+                        case "up" -> worldY -= speed;
+                        case "left" ->  worldX -= speed;
+                        case "right" -> worldX += speed;
+                        case "down-left" -> {
+                            worldY += speed - 1;
+                            worldX -= speed - 1;
+                        }
+                        case "up-left" -> {
+                            worldY -= speed - 1;
+                            worldX -= speed - 1;
+                        }
+                        case "down-right" ->  {
+                            worldY += speed - 1;
+                            worldX += speed - 1;
+                        }
+                        case "up-right" -> {
+                            worldY -= speed - 1;
+                            worldX += speed - 1;
                         }
                     }
                 }
-                if(randomDirection > 9){
+                if(randomDirection > 9 || collisionOn){
+                    isMoving = false;
                     if(spriteCounter <= 15){
                         spriteNum = 0;
                     }
@@ -147,6 +152,7 @@ public class Skeleton extends Entity{
                         spriteCounter = 0;
                     }
                 }
+
             }
         }
     }
@@ -165,20 +171,20 @@ public class Skeleton extends Entity{
             width = gp.tileSize * 2;
             height = gp.tileSize * 2;
 
-            if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
+            if(isMoving){
                 switch(direction){
-                    case "up" -> image = up[playerClass][spriteNum];
-                    case "down" -> image = down[playerClass][spriteNum];
-                    case "left","up-left","down-left" -> image = left[playerClass][spriteNum];
-                    case "right","up-right","down-right" -> image = right[playerClass][spriteNum];
+                    case "up" -> image = upMonster[spriteNum];
+                    case "down" -> image = downMonster[spriteNum];
+                    case "left","up-left","down-left" -> image = leftMonster[spriteNum];
+                    case "right","up-right","down-right" -> image = rightMonster[spriteNum];
                 }
             }
             else{
                 switch(direction){
-                    case "up" -> image = upIdle[playerClass][spriteNum];
-                    case "down" -> image = downIdle[playerClass][spriteNum];
-                    case "left","up-left","down-left" -> image = leftIdle[playerClass][spriteNum];
-                    case "right","up-right","down-right" -> image = rightIdle[playerClass][spriteNum];
+                    case "up" -> image = upIdleMonster[spriteNum];
+                    case "down" -> image = downIdleMonster[spriteNum];
+                    case "left","up-left","down-left" -> image = leftIdleMonster[spriteNum];
+                    case "right","up-right","down-right" -> image = rightIdleMonster[spriteNum];
                 }
             }
         }

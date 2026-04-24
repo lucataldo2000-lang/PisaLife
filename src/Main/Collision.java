@@ -116,4 +116,69 @@ public class Collision {
 
         return objIndex;
     }
+
+    public int checkMonster(Entity entity){
+
+        int Index = 999;
+
+        for(int i = 0; i < gp.monsters[gp.currentLevel][gp.currentRoom].length; i++){
+
+            if(gp.monsters[gp.currentLevel][gp.currentRoom][i] != null){
+                entity.solidArea.x = entity.solidArea.x + entity.worldX;
+                entity.solidArea.y = entity.solidArea.y + entity.worldY;
+
+                gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea.x = gp.monsters[gp.currentLevel][gp.currentRoom][i].worldX + gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea.x;
+                gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea.y = gp.monsters[gp.currentLevel][gp.currentRoom][i].worldY + gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea.y;
+
+                switch (entity.direction){
+                    case "up","up-left","up-right" -> entity.solidArea.y -= entity.speed;
+                    case "down","down-left","down-right" -> entity.solidArea.y += entity.speed;
+                    case "right" -> entity.solidArea.x += entity.speed;
+                    case "left" -> entity.solidArea.x -= entity.speed;
+                }
+
+                if(entity.solidArea.intersects(gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea)){
+                    Index = i;
+                    entity.collisionOn = true;
+                }
+
+                entity.solidArea.x = entity.solidAreaX;
+                entity.solidArea.y = entity.solidAreaY;
+
+                gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea.x = gp.monsters[gp.currentLevel][gp.currentRoom][i].solidAreaX;
+                gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea.y = gp.monsters[gp.currentLevel][gp.currentRoom][i].solidAreaY;
+
+            }
+        }
+
+
+        return Index;
+    }
+
+    public void checkPlayer(Entity entity){
+
+        entity.solidArea.x = entity.worldX + entity.solidArea.x;
+        entity.solidArea.y = entity.worldY + entity.solidArea.y;
+
+        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
+        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+
+        switch (entity.direction){
+            case "up","up-left","up-right" -> entity.solidArea.y -= entity.speed;
+            case "down","down-left","down-right" -> entity.solidArea.y += entity.speed;
+            case "right" -> entity.solidArea.x += entity.speed;
+            case "left" -> entity.solidArea.x -= entity.speed;
+        }
+
+        if(entity.solidArea.intersects(gp.player.solidArea)){
+            entity.collisionOn = true;
+        }
+
+        gp.player.solidArea.x = gp.player.solidAreaX;
+        gp.player.solidArea.y = gp.player.solidAreaY;
+
+        entity.solidArea.x = entity.solidAreaX;
+        entity.solidArea.y = entity.solidAreaY;
+
+    }
 }
