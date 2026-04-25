@@ -22,6 +22,7 @@ public class BasicSword extends Entity{
         solidArea.y = 0;
         solidAreaX = solidArea.x;
         solidAreaY = solidArea.y;
+        damage = 25;
 
         try{
             for(int i = 0; i < objImage.length; i++){

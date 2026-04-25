@@ -14,7 +14,7 @@ public class Player extends Entity{
     public int screenY;
 
     public Entity[] inventory = new Entity[5];
-    public int objIndex,monsterIndex;
+    public int objIndex,monsterIndex,weaponIndex;
 
     public Player(GamePanel gp){
         super(gp);
@@ -26,8 +26,15 @@ public class Player extends Entity{
         solidArea.x = 12;
         solidArea.y = 22;
 
+        attackArea = new Rectangle(50,50);
+        attackArea.x = 40;
+        attackArea.y = 7;
+
         solidAreaX = solidArea.x;
         solidAreaY = solidArea.y;
+
+        attackAreaX = attackArea.x;
+        attackAreaY = attackArea.y;
 
         screenX = gp.screenWidth / 2;
         screenY = gp.screenHeight / 2;
@@ -43,6 +50,7 @@ public class Player extends Entity{
         life = maxLife;
         speed = 4;
         direction = "down";
+        strength = 1;
 
         worldX = 112;
         worldY = 434;
@@ -133,20 +141,20 @@ public class Player extends Entity{
             left[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior11.png"));
             right[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior8.png"));
 
-            upAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown3.png"));
-            downAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown0.png"));
-            rightAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight0.png"));
-            leftAttack[0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight3.png"));
+            upAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown3.png"));
+            downAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown0.png"));
+            rightAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight0.png"));
+            leftAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight3.png"));
 
-            upAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown4.png"));
-            downAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown1.png"));
-            rightAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight1.png"));
-            leftAttack[0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight4.png"));
+            upAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown4.png"));
+            downAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown1.png"));
+            rightAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight1.png"));
+            leftAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight4.png"));
 
-            upAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown5.png"));
-            downAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown2.png"));
-            rightAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight2.png"));
-            leftAttack[0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight5.png"));
+            upAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown5.png"));
+            downAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown2.png"));
+            rightAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight2.png"));
+            leftAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight5.png"));
 
             up[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard1.png"));
             down[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
@@ -190,9 +198,15 @@ public class Player extends Entity{
         }catch(IOException e){e.printStackTrace();}
     }
 
+
     public void update(){
 
         if(gp.gameThread != null && gp.gameState == gp.playState){
+
+            if(life <= 0){
+                life = 0;
+                gp.gameState = gp.deathState;
+            }
 
             if(!attacking){
                 spriteCounter++;
@@ -201,7 +215,7 @@ public class Player extends Entity{
                     collisionOn = false;
 
                     gp.checker.checkTile(this);
-                    monsterIndex = gp.checker.checkMonster(this);
+                    gp.checker.checkMonster(this);
 
                     if(gp.handler.upPressed){
                         direction = "up";
@@ -295,6 +309,10 @@ public class Player extends Entity{
             else{
                 spriteCounter++;
 
+                monsterIndex = gp.checker.checkDamage(this);
+
+                attack();
+
                 if(spriteCounter <= 4){
                     spriteNum = 0;
                 }
@@ -309,11 +327,30 @@ public class Player extends Entity{
                     spriteCounter = 0;
                     spriteNum = 0;
                     attacking = false;
+                    damageDone = false;
                 }
             }
 
 
             gp.events.checkEvent();
+        }
+    }
+
+
+    public void attack(){
+        if(monsterIndex != 999){
+
+            if(!damageDone){
+                damageDone = true;
+                Entity monster = gp.monsters[gp.currentLevel][gp.currentRoom][monsterIndex];
+                monster.life -= damage;
+
+                System.out.println(monster.life);
+
+                if(monster.life <= 0){
+                    gp.monsters[gp.currentLevel][gp.currentRoom][monsterIndex] = null;
+                }
+            }
         }
     }
 
@@ -330,6 +367,11 @@ public class Player extends Entity{
                        case 1 -> {
 
                            if(inventory[0] == null){
+                               switch(gp.objects[gp.currentLevel][gp.currentRoom][index].name){
+                                   case "Iron Sword" -> weaponIndex = 0;
+                               }
+
+                               damage = gp.objects[gp.currentLevel][gp.currentRoom][index].damage * strength;
                                inventory[0] = gp.objects[gp.currentLevel][gp.currentRoom][index];
                                gp.objects[gp.currentLevel][gp.currentRoom][index] = null;
                            }
@@ -434,16 +476,16 @@ public class Player extends Entity{
         else{
             switch(direction){
                 case "up" -> {
-                    image = upAttack[playerClass][spriteNum]; width = gp.tileSize * 2; height = gp.tileSize * 3; y = screenY - gp.tileSize;
+                    image = upAttack[playerClass][weaponIndex][spriteNum]; width = gp.tileSize * 2; height = gp.tileSize * 3; y = screenY - gp.tileSize;
                 }
                 case "down" -> {
-                    image = downAttack[playerClass][spriteNum]; width = gp.tileSize * 2; height = gp.tileSize * 3; y = screenY + gp.tileSize / 2 - 12;
+                    image = downAttack[playerClass][weaponIndex][spriteNum]; width = gp.tileSize * 2; height = gp.tileSize * 3; y = screenY + gp.tileSize / 2 - 12;
                 }
                 case "left","up-left","down-left" -> {
-                    image = leftAttack[playerClass][spriteNum]; height = gp.tileSize * 2; width = gp.tileSize * 3; x = screenX - gp.tileSize * 2 + 14;
+                    image = leftAttack[playerClass][weaponIndex][spriteNum]; height = gp.tileSize * 2; width = gp.tileSize * 3; x = screenX - gp.tileSize * 2 + 14;
                 }
                 case "right","up-right","down-right" -> {
-                    image = rightAttack[playerClass][spriteNum]; height = gp.tileSize * 2; width = gp.tileSize * 3; x = screenX + gp.tileSize - 14;
+                    image = rightAttack[playerClass][weaponIndex][spriteNum]; height = gp.tileSize * 2; width = gp.tileSize * 3; x = screenX + gp.tileSize - 14;
                 }
             }
         }

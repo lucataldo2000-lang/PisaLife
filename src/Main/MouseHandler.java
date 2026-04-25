@@ -36,7 +36,7 @@ public class MouseHandler implements MouseWheelListener, MouseListener{
 
         switch (button){
             case MouseEvent.BUTTON1 -> {
-                if(!gp.player.attacking){
+                if(!gp.player.attacking && gp.player.inventory[0] != null){
                     gp.player.attacking = true;
                     gp.player.spriteNum = 0;
                     gp.player.spriteCounter = 0;

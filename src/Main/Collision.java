@@ -181,4 +181,50 @@ public class Collision {
         entity.solidArea.y = entity.solidAreaY;
 
     }
+
+    public int checkDamage(Entity player){
+
+        int monsterIndex = 999;
+
+        for(int i = 0; i < gp.monsters[gp.currentLevel][gp.currentRoom].length; i++){
+
+            if(gp.monsters[gp.currentLevel][gp.currentRoom][i] != null){
+                Entity monsters = gp.monsters[gp.currentLevel][gp.currentRoom][i];
+
+                monsters.solidArea.x = monsters.worldX + monsters.solidArea.x;
+                monsters.solidArea.y = monsters.worldY + monsters.solidArea.y;
+
+                switch (player.direction){
+                    case "up","up-left","up-right" -> {
+                        player.attackArea.x = player.worldX + player.attackAreaY;
+                        player.attackArea.y = player.worldY;
+                    }
+                    case "down","down-left","down-right" -> {
+                        player.attackArea.x = player.worldX + player.attackAreaY;
+                        player.attackArea.y = player.worldY + player.attackAreaX + player.solidArea.width;
+                    }
+                    case "left" -> {
+                        player.attackArea.x = player.worldX - player.attackAreaX;
+                        player.attackArea.y = player.worldY + player.attackAreaY;
+                    }
+                    case "right" -> {
+                        player.attackArea.x = player.worldX + player.attackAreaX;
+                        player.attackArea.y = player.worldY + player.attackAreaY;
+                    }
+                }
+
+                if(player.attackArea.intersects(monsters.solidArea)){
+                    monsterIndex = i;
+                }
+
+                monsters.solidArea.x = monsters.solidAreaX;
+                monsters.solidArea.y = monsters.solidAreaY;
+
+                player.attackArea.x = player.attackAreaX;
+                player.attackArea.y = player.attackAreaY;
+            }
+        }
+
+        return monsterIndex;
+    }
 }

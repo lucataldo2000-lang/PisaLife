@@ -23,16 +23,22 @@ public class Entity {
     public int life;
     public int maxLife;
     public int speed;
-    public int attack;
+    public int damage;
     public int defence;
+    public int strength;
     public Rectangle solidArea;
+    public Rectangle attackArea;
     public boolean collisionOn = false;
     public boolean attacking = false;
     public boolean canTakeDamage = false;
     public boolean isMoving = false;
+    public boolean damageDone = false;
 
     public int solidAreaX;
     public int solidAreaY;
+
+    public int attackAreaX;
+    public int attackAreaY;
 
     public int amount;
     public boolean stackable;
@@ -66,10 +72,10 @@ public class Entity {
     BufferedImage[] leftIdleMonster = new BufferedImage[2];
     BufferedImage[] rightIdleMonster = new BufferedImage[2];
 
-    BufferedImage[][] upAttack = new BufferedImage[3][3];
-    BufferedImage[][] downAttack = new BufferedImage[3][3];
-    BufferedImage[][] leftAttack = new BufferedImage[3][3];
-    BufferedImage[][] rightAttack = new BufferedImage[3][3];
+    BufferedImage[][][] upAttack = new BufferedImage[3][3][3];
+    BufferedImage[][][] downAttack = new BufferedImage[3][3][3];
+    BufferedImage[][][] leftAttack = new BufferedImage[3][3][3];
+    BufferedImage[][][] rightAttack = new BufferedImage[3][3][3];
 
     public int spriteCounter;
     public int spriteNum;

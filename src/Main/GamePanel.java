@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable{
     Graphics2D g2;
 
     public int tileSize = 32;
-    public boolean fullScreen = false;
+    public boolean fullScreen = true;
 
     public int currentLevel = 1;
     public int currentRoom = 1;
@@ -125,12 +125,8 @@ public class GamePanel extends JPanel implements Runnable{
                 for(int i = 0; i < monsters[currentLevel][currentRoom].length; i++){
                     if(monsters[currentLevel][currentRoom][i] != null){
                         monsters[currentLevel][currentRoom][i].update();
-                    }
-                }
 
-                if(player.life <= 0){
-                    player.life = 0;
-                    gameState = deathState;
+                    }
                 }
 
             }
