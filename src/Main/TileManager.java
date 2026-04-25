@@ -22,7 +22,7 @@ public class TileManager extends Tile{
 
         getTileImages();
 
-        for(int i = 1; i <= 3; i++){
+        for(int i = 1; i <= 7; i++){
             loadRoom("/Levels/Level1Room" + i,i);
         }
     }

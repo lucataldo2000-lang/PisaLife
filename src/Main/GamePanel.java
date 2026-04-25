@@ -137,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
                 waitTime++;
             }
 
-            //System.out.println(player.worldX + " " + player.worldY);
+            System.out.println(player.worldX + " " + player.worldY);
             //System.out.println(player.worldX / tileSize + " " + player.worldY / tileSize);
 
         }

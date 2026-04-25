@@ -42,8 +42,70 @@ public class EventChecker {
                 setPlayerValues(100,380, "right");
                 return;
             }
+            if(checkTeleport(1,2,18,4)){
+                if(room[3] != 4 && room[3] != 6){
+                    int ran = random.nextInt(1,3);
+                    int newRoom = 0;
+
+                    switch (ran){
+                        case 1 -> newRoom = 4;
+                        case 2 -> newRoom = 6;
+                    }
+                    room[3] = newRoom;
+                }
+
+                waitTime = 0;
+
+                gp.currentRoom = room[3];
+
+                setPlayerValues(100,100, "right");
+                return;
+            }
+            if(checkTeleport(1,3,18,4)){
+                if(room[3] != 4 && room[3] != 6){
+                    int ran = random.nextInt(1,3);
+                    int newRoom = 0;
+
+                    switch (ran){
+                        case 1 -> newRoom = 4;
+                        case 2 -> newRoom = 6;
+                    }
+                    room[3] = newRoom;
+                }
+
+                waitTime = 0;
+
+                gp.currentRoom = room[3];
+
+                setPlayerValues(100,100, "right");
+                return;
+            }
             if(checkTeleport(1,2,0,12)){gp.currentRoom = room[1]; waitTime = 0;setPlayerValues(470,380, "left");}
+            if(checkTeleport(1,2,7,18)){gp.currentRoom = 5;waitTime = 0;setPlayerValues(210,90, "down");}
+            if(checkTeleport(1,5,7,0)){gp.currentRoom = room[2];waitTime = 0;setPlayerValues(210,500, "up");}
             if(checkTeleport(1,3,0,12)){gp.currentRoom = room[1]; waitTime = 0;setPlayerValues(470,380, "left");}
+            if(checkTeleport(1,4,2,1)){gp.currentRoom = room[2]; waitTime = 0;setPlayerValues(515,100, "left");}
+            if(checkTeleport(1,4,0,12)){gp.currentRoom = 7; waitTime = 0;setPlayerValues(515,120, "left");}
+            if(checkTeleport(1,7,18,3)){
+                gp.currentRoom = room[3];
+                waitTime = 0;
+
+                int x = 0;
+                int y = 0;
+
+                if(room[3] == 4) {
+                    x = 80;
+                    y = 380;
+                }
+                if(room[3] == 6){
+                    y = 504;
+                    x = 210;
+                }
+
+                setPlayerValues(x,y, "left");
+            }
+            if(checkTeleport(1,6,2,1)){gp.currentRoom = room[2]; waitTime = 0;setPlayerValues(515,100, "left");}
+            if(checkTeleport(1,6,3,17)){gp.currentRoom = 7; waitTime = 0;setPlayerValues(515,120, "left");}
         }
     }
 
