@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable{
     Graphics2D g2;
 
     public int tileSize = 32;
-    public boolean fullScreen = true;
+    public boolean fullScreen = false;
 
     public int currentLevel = 1;
     public int currentRoom = 1;

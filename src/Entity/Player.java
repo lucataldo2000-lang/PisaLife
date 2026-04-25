@@ -141,20 +141,20 @@ public class Player extends Entity{
             left[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior11.png"));
             right[0][2] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/warrior8.png"));
 
-            upAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown3.png"));
-            downAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown0.png"));
-            rightAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight0.png"));
-            leftAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight3.png"));
+            upAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackUpDown3.png"));
+            downAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackUpDown0.png"));
+            rightAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackLeftRight0.png"));
+            leftAttack[0][0][0] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackLeftRight3.png"));
 
-            upAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown4.png"));
-            downAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown1.png"));
-            rightAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight1.png"));
-            leftAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight4.png"));
+            upAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackUpDown4.png"));
+            downAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackUpDown1.png"));
+            rightAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackLeftRight1.png"));
+            leftAttack[0][0][1] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackLeftRight4.png"));
 
-            upAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown5.png"));
-            downAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackUpDown2.png"));
-            rightAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight2.png"));
-            leftAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/BasicAttackLeftRight5.png"));
+            upAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackUpDown5.png"));
+            downAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackUpDown2.png"));
+            rightAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackLeftRight2.png"));
+            leftAttack[0][0][2] = ImageIO.read(getClass().getResourceAsStream("/WarriorAttackAnimations/basicAttackLeftRight5.png"));
 
             up[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard1.png"));
             down[1][0] = ImageIO.read(getClass().getResourceAsStream("/PlayerTextures/wizard0.png"));
