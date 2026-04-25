@@ -341,6 +341,7 @@ public class Player extends Entity{
         if(monsterIndex != 999){
 
             if(!damageDone){
+                damage = inventory[0].damage * strength;
                 damageDone = true;
                 Entity monster = gp.monsters[gp.currentLevel][gp.currentRoom][monsterIndex];
                 monster.life -= damage;
@@ -371,7 +372,6 @@ public class Player extends Entity{
                                    case "Iron Sword" -> weaponIndex = 0;
                                }
 
-                               damage = gp.objects[gp.currentLevel][gp.currentRoom][index].damage * strength;
                                inventory[0] = gp.objects[gp.currentLevel][gp.currentRoom][index];
                                gp.objects[gp.currentLevel][gp.currentRoom][index] = null;
                            }
