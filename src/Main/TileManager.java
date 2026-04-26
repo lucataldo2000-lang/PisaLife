@@ -22,7 +22,7 @@ public class TileManager extends Tile{
 
         getTileImages();
 
-        for(int i = 1; i <= 7; i++){
+        for(int i = 0; i <= 9; i++){
             loadRoom("/Levels/Level1Room" + i,i);
         }
     }
@@ -48,6 +48,10 @@ public class TileManager extends Tile{
             tiles[15] = new Tile();
             tiles[15].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/woodplank.png"));
             tiles[15].collision = true;
+
+            tiles[17] = new Tile();
+            tiles[17].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/woodplank.png"));
+            tiles[17].mobCollision = true;
 
             tiles[16] = new Tile();
             tiles[16].image = ImageIO.read(getClass().getResourceAsStream("/TilesTextures/brokenWoodPlank.png"));

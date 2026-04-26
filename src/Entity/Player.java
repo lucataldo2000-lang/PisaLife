@@ -208,6 +208,9 @@ public class Player extends Entity{
                 gp.gameState = gp.deathState;
             }
 
+            waitTime++;
+            takeDamage();
+
             if(!attacking){
                 spriteCounter++;
                 if(gp.handler.upPressed || gp.handler.downPressed || gp.handler.leftPressed || gp.handler.rightPressed){
@@ -215,7 +218,6 @@ public class Player extends Entity{
                     collisionOn = false;
 
                     gp.checker.checkTile(this);
-                    gp.checker.checkMonster(this);
 
                     if(gp.handler.upPressed){
                         direction = "up";
@@ -336,10 +338,8 @@ public class Player extends Entity{
         }
     }
 
-
     public void attack(){
         if(monsterIndex != 999){
-
             if(!damageDone){
                 damage = inventory[0].damage * strength;
                 damageDone = true;
@@ -352,6 +352,17 @@ public class Player extends Entity{
                     gp.monsters[gp.currentLevel][gp.currentRoom][monsterIndex] = null;
                 }
             }
+        }
+    }
+
+    int waitTime;
+
+    public void takeDamage(){
+        monsterIndex = gp.checker.checkMonster(this);
+
+        if(monsterIndex != 999 && waitTime >= 30){
+            waitTime = 0;
+            life -= gp.monsters[gp.currentLevel][gp.currentRoom][monsterIndex].damage;
         }
     }
 

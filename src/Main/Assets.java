@@ -2,9 +2,12 @@ package Main;
 
 import Entity.*;
 
+import java.util.Random;
+
 public class Assets {
 
     GamePanel gp;
+    Random random = new Random();
 
     public Assets(GamePanel gp){this.gp = gp;}
 
@@ -40,20 +43,44 @@ public class Assets {
     }
 
     public void setMonsters(){
-        gp.monsters[1][1][0] = new Skeleton(gp);
-        gp.monsters[1][1][0].worldX = gp.tileSize * 7;
-        gp.monsters[1][1][0].worldY = gp.tileSize * 3;
 
-        gp.monsters[1][1][1] = new Skeleton(gp);
-        gp.monsters[1][1][1].worldX = gp.tileSize * 10;
-        gp.monsters[1][1][1].worldY = gp.tileSize * 7;
+        for(int i = 0; i < gp.maxRoom; i++){
 
-        gp.monsters[1][1][2] = new Skeleton(gp);
-        gp.monsters[1][1][2].worldX = gp.tileSize * 15;
-        gp.monsters[1][1][2].worldY = gp.tileSize * 9;
+            int col = 0;
+            int row = 0;
+            int index = 0;
 
-        gp.monsters[1][1][3] = new Skeleton(gp);
-        gp.monsters[1][1][3].worldX = gp.tileSize * 4;
-        gp.monsters[1][1][3].worldY = gp.tileSize * 4;
+            while(col < gp.maxWorldCol && row < gp.maxWorldRow && index < gp.maxMonsters){
+
+                int num = gp.tileManager.tileNum[1][i][col][row];
+
+                if(gp.tileManager.tiles[num] != null && i != 0  && num != 10 && num != 17 && !gp.tileManager.tiles[num].collision && !gp.tileManager.tiles[num].mobCollision){
+
+                    int ran = random.nextInt(1,101);
+
+                    if(ran >= 95){
+                        Entity skeleton = new Skeleton(gp);
+                        skeleton.direction = "down";
+                        skeleton.worldX = col * gp.tileSize;
+                        skeleton.worldY = row * gp.tileSize;
+
+                        gp.checker.checkTile(skeleton);
+
+                        if(!skeleton.collisionOn){
+                            gp.monsters[1][i][index] = skeleton;
+                            index++;
+                        }
+                    }
+
+                }
+
+                col++;
+
+                if(col == gp.maxWorldCol){
+                    col = 0;
+                    row++;
+                }
+            }
+        }
     }
 }

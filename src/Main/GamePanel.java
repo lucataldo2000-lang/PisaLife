@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int maxLevel = 3;
     public final int maxRoom = 10;
     public final int maxObj = 20;
-    public final int maxMonsters = 5;
+    public final int maxMonsters = 10;
 
     public int maxWorldCol = 20;
     public int maxWorldRow = 20;
@@ -137,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
                 waitTime++;
             }
 
-            System.out.println(player.worldX + " " + player.worldY);
+            //System.out.println(player.worldX + " " + player.worldY);
             //System.out.println(player.worldX / tileSize + " " + player.worldY / tileSize);
 
         }

@@ -32,6 +32,10 @@ public class Collision {
                 if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
                     if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
                         player.collisionOn = true;
+
+                    }
+                    if((gp.tileManager.tiles[tileNum1].mobCollision || gp.tileManager.tiles[tileNum2].mobCollision) && player.type == player.monsterType){
+                        player.collisionOn = true;
                     }
                 }
 
@@ -44,6 +48,9 @@ public class Collision {
 
                 if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
                     if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
+                        player.collisionOn = true;
+                    }
+                    if((gp.tileManager.tiles[tileNum1].mobCollision || gp.tileManager.tiles[tileNum2].mobCollision) && player.type == player.monsterType){
                         player.collisionOn = true;
                     }
                 }
@@ -60,6 +67,9 @@ public class Collision {
                     if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
                         player.collisionOn = true;
                     }
+                    if((gp.tileManager.tiles[tileNum1].mobCollision || gp.tileManager.tiles[tileNum2].mobCollision) && player.type == player.monsterType){
+                        player.collisionOn = true;
+                    }
                 }
 
             }
@@ -72,6 +82,9 @@ public class Collision {
                 if(gp.tileManager.tiles[tileNum1] != null && gp.tileManager.tiles[tileNum2] != null){
 
                     if(gp.tileManager.tiles[tileNum1].collision || gp.tileManager.tiles[tileNum2].collision){
+                        player.collisionOn = true;
+                    }
+                    if((gp.tileManager.tiles[tileNum1].mobCollision || gp.tileManager.tiles[tileNum2].mobCollision) && player.type == player.monsterType){
                         player.collisionOn = true;
                     }
                 }
@@ -139,7 +152,6 @@ public class Collision {
 
                 if(entity.solidArea.intersects(gp.monsters[gp.currentLevel][gp.currentRoom][i].solidArea)){
                     Index = i;
-                    entity.collisionOn = true;
                 }
 
                 entity.solidArea.x = entity.solidAreaX;

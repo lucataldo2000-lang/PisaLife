@@ -22,6 +22,7 @@ public class Skeleton extends Entity{
         maxLife = 100;
         life = maxLife;
         direction = "down";
+        damage = 30;
 
         type = monsterType;
         solidArea = new Rectangle(20,40);

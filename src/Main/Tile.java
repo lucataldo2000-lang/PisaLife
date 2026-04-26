@@ -6,5 +6,6 @@ public class Tile {
 
     public BufferedImage image;
     boolean collision = false;
+    boolean mobCollision = false;
 
 }
