@@ -360,10 +360,8 @@ public class Entity {
         int startCol = (worldX + solidAreaX) / gp.tileSize;
         int startRow = (worldY + solidAreaY) / gp.tileSize;
 
-        //setta i nodi se sono solidi o no e il loro fCost
         gp.pathFinding.setNodes(gp.currentRoom, startCol, startRow, goalCol, goalRow);
 
-        //cerca i nodi migliori
         if (gp.pathFinding.search()) {
 
             int x = gp.pathFinding.pathList.getFirst().col * gp.tileSize;
